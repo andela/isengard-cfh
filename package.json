@@ -16,7 +16,8 @@
     "start": "node node_modules/grunt-cli/bin/grunt",
     "lint": "eslint . --ext .md",
     "test": "node node_modules/grunt-cli/bin/grunt test",
-    "postinstall": "node node_modules/grunt-cli/bin/grunt install"
+    "postinstall": "node node_modules/grunt-cli/bin/grunt install",
+    "karma": "./node_modules/karma/bin/karma start"
   },
   "dependencies": {
     "async": "~0.2.9",
