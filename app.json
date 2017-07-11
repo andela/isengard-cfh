@@ -1,18 +1,14 @@
 {
   "name": "isengard-cfh",
   "description": "",
-  "scripts": {
-  },
+  "scripts": {},
   "env": {
     "MONGOHQ_URL": {
       "required": true
     }
   },
-  "formation": {
-  },
-  "addons": [
-
-  ],
+  "formation": {},
+  "addons": [],
   "buildpacks": [
     {
       "url": "https://github.com/heroku/exec-buildpack"
