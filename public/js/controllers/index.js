@@ -1,5 +1,5 @@
 angular.module('mean.system')
-.controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', function ($scope, Global, $location, socket, game, AvatarService) {
+.controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', '$http', '$window', function ($scope, Global, $location, socket, game, AvatarService, $http, $window) {
     $scope.global = Global;
 
     $scope.playAsGuest = function() {
@@ -15,10 +15,19 @@ angular.module('mean.system')
       }
     };
 
+    $scope.signup = function() {
+      $http.post('/api/auth/signup', JSON.stringify($scope.formData))
+      .success(function(data) {
+        if (data.status === true) {
+          $window.localStorage.setItem('token', JSON.stringify(data.token));
+          $window.location.href = '/';
+        }
+      });
+    };
+
     $scope.avatars = [];
     AvatarService.getAvatars()
       .then(function(data) {
         $scope.avatars = data;
       });
-
 }]);
