@@ -92,4 +92,6 @@ module.exports = function(app, passport, auth) {
     app.get('/play', index.play);
     app.get('/', index.render);
 
+    app.get('/api/auth/play', index.play);
+
 };

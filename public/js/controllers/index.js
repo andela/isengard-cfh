@@ -1,5 +1,5 @@
 angular.module('mean.system')
-.controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService','$http', '$window', function ($scope, Global, $location, socket, game, AvatarService, $http, $window) {
+.controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', '$http', '$window', function ($scope, Global, $location, socket, game, AvatarService, $http, $window) {
     $scope.global = Global;
 
     $scope.playAsGuest = function() {
@@ -41,11 +41,26 @@ angular.module('mean.system')
         });
   };
 
+  $scope.playGame = function() {
+    var token = $window.localStorage.getItem('token');
+    var config = { headers: {
+      Authorization: 'Bearer ' + token,
+      Accept: 'application/json;odata=verbose',
+      'X-Testing': 'testing'
+    }
+    };
+    $http.get('/api/auth/play?custom', config)
+    .success(function(data) {
+      if (data.status === true) {
+        $window.location.href = '/#!/app?custom';
+      }
+    });
+  };
+
   $scope.logout = function() {
     $window.localStorage.removeItem('token');
     $http.get('/signout').success(function(data) {
       if (data.status === true) {
-        console.log('I got here');
         $window.location.href = '/';
       }
     }).error(function(error) {
