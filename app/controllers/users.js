@@ -84,23 +84,23 @@ exports.create = function(req, res) {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
-    }).exec((err, existingUser) => {
+    }).exec(function(err, existingUser) {
       if (!existingUser) {
-        const user = new User(req.body);
+        var user = new User(req.body);
         // Switch the user's avatar index to an actual avatar url
         user.avatar = avatars[user.avatar];
         user.provider = 'local';
-        user.save((err) => {
+        user.save(function(err) {
           if (err) {
             return res.render('/#!/signup?error=unknown', {
               errors: err.errors,
               user: user
             });
           }
-          req.logIn(user, (err) => {
+          req.logIn(user, function(err) {
             if (err) return next(err);
-            const userDetails = { email: user.email, password: user.password };
-            const token = jwt.sign(userDetails, config.secret, {
+            var userDetails = { email: user.email, password: user.password };
+            var token = jwt.sign(userDetails, config.secret, {
               expiresIn: 60 * 60 * 24  // token expires in 24 hours
             });
             res.json({
