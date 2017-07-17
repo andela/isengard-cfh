@@ -2,8 +2,11 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+  jwt = require('jsonwebtoken'),
+  bcrypt = require('bcryptjs'),
   User = mongoose.model('User');
 var avatars = require('./avatars').all();
+var config = require('../../config/config');
 
 /**
  * Auth callback
@@ -39,7 +42,9 @@ exports.signup = function(req, res) {
  */
 exports.signout = function(req, res) {
   req.logout();
-  res.redirect('/');
+  // res.redirect('/');
+  res.json({ message: 'Logged out',
+    status: true });
 };
 
 /**
@@ -70,10 +75,9 @@ exports.checkAvatar = function(req, res) {
     // If user doesn't even exist, redirect to /
     res.redirect('/');
   }
-
 };
 
-/**
+/*
  * Create user
  */
 exports.create = function(req, res) {
@@ -105,6 +109,41 @@ exports.create = function(req, res) {
   } else {
     return res.redirect('/#!/signup?error=incomplete');
   }
+};
+
+exports.login = function (req, res, next) {
+  if (!req.body.email || !req.body.password) {
+    return res.json({
+      success: false,
+      message: 'You need to enter email or password'
+    });
+  }
+  User.findOne({
+    email: req.body.email
+  }).exec(function(error, user) {
+    if (error) throw error;
+    if (!user) {
+      return res.json({
+        success: false,
+        message: 'Unable to Login. Invalid Credentials'
+      });
+    }
+    var isMatched = bcrypt.compareSync(req.body.password, user.hashed_password);
+    if (isMatched) {
+      req.logIn(user, function (err) {
+        if (err) return next(err);
+        var token = jwt.sign(user, config.secret, {
+          expiresIn: 1080 // in seconds
+        });
+        res.json({ success: true, token: token });
+      });
+    } else {
+      return res.json({
+        success: false,
+        message: 'Invalid password'
+      });
+    }
+  });
 };
 
 /**
