@@ -41,6 +41,7 @@ angular.module('mean.system')
         });
   };
 
+<<<<<<< HEAD
   $scope.playGame = function() {
     var token = $window.localStorage.getItem('token');
     var config = { headers: {
@@ -70,6 +71,20 @@ angular.module('mean.system')
 
   $scope.avatars = [];
   AvatarService.getAvatars()
+=======
+    $scope.signup = function() {
+      $http.post('/api/auth/signup', JSON.stringify($scope.formData))
+      .success(function(data) {
+        if (data.status === true) {
+          $window.localStorage.setItem('token', JSON.stringify(data.token));
+          $window.location.href = '/';
+        }
+      });
+    };
+
+    $scope.avatars = [];
+    AvatarService.getAvatars()
+>>>>>>> 085911874113618ad425a86101a3a887ecd9b0ae
       .then(function(data) {
         $scope.avatars = data;
       });

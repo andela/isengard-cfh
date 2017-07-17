@@ -1,7 +1,8 @@
 var async = require('async');
 
+
 module.exports = function(app, passport, auth) {
-    //User Routes
+    // User Routes
     var users = require('../app/controllers/users');
     app.get('/signin', users.signin);
     app.get('/signup', users.signup);
@@ -12,6 +13,7 @@ module.exports = function(app, passport, auth) {
     app.post('/users', users.create);
     app.post('/users/avatars', users.avatars);
 
+    app.post('/api/auth/signup', users.create);
     // Donation Routes
     app.post('/donations', users.addDonation);
 
@@ -20,8 +22,9 @@ module.exports = function(app, passport, auth) {
         failureFlash: 'Invalid email or password.'
     }), users.session);
 
-   // lOGIN 
+   // login endpoint
     app.post('/api/auth/signin', users.login);
+
     app.get('/users/me', users.me);
     app.get('/users/:userId', users.show);
 
@@ -44,7 +47,7 @@ module.exports = function(app, passport, auth) {
         failureRedirect: '/signin'
     }), users.authCallback);
 
-    //Setting the twitter oauth routes
+    // Setting the twitter oauth routes
     app.get('/auth/twitter', passport.authenticate('twitter', {
         failureRedirect: '/signin'
     }), users.signin);
@@ -53,7 +56,7 @@ module.exports = function(app, passport, auth) {
         failureRedirect: '/signin'
     }), users.authCallback);
 
-    //Setting the google oauth routes
+    // Setting the google oauth routes
     app.get('/auth/google', passport.authenticate('google', {
         failureRedirect: '/signin',
         scope: [
@@ -91,7 +94,5 @@ module.exports = function(app, passport, auth) {
     var index = require('../app/controllers/index');
     app.get('/play', index.play);
     app.get('/', index.render);
-
     app.get('/api/auth/play', index.play);
-
 };

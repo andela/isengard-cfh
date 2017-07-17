@@ -6,6 +6,7 @@ var express = require('express'),
     fs = require('fs'),
     passport = require('passport'),
     logger = require('mean-logger'),
+    jwt = require('jsonwebtoken');
     io = require('socket.io');
 
 /**
@@ -44,6 +45,8 @@ walk(models_path);
 require('./config/passport')(passport);
 
 var app = express();
+
+app.set('superSecret', config.secret);
 
 app.use(function(req, res, next){
     next();
