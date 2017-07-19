@@ -2,20 +2,23 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+  jwt = require('jsonwebtoken'),
+  bcrypt = require('bcryptjs'),
   User = mongoose.model('User');
 var avatars = require('./avatars').all();
+var config = require('../../config/config');
 
 /**
  * Auth callback
  */
-exports.authCallback = function(req, res, next) {
+exports.authCallback = function (req, res, next) {
   res.redirect('/chooseavatars');
 };
 
 /**
  * Show login form
  */
-exports.signin = function(req, res) {
+exports.signin = function (req, res) {
   if (!req.user) {
     res.redirect('/#!/signin?error=invalid');
   } else {
@@ -26,7 +29,7 @@ exports.signin = function(req, res) {
 /**
  * Show sign up form
  */
-exports.signup = function(req, res) {
+exports.signup = function (req, res) {
   if (!req.user) {
     res.redirect('/#!/signup');
   } else {
@@ -37,15 +40,17 @@ exports.signup = function(req, res) {
 /**
  * Logout
  */
-exports.signout = function(req, res) {
+exports.signout = function (req, res) {
   req.logout();
-  res.redirect('/');
+  // res.redirect('/');
+  res.json({ message: 'Logged out',
+    status: true });
 };
 
 /**
  * Session
  */
-exports.session = function(req, res) {
+exports.session = function (req, res) {
   res.redirect('/');
 };
 
@@ -54,12 +59,12 @@ exports.session = function(req, res) {
  * already has an avatar. If they don't have one, redirect them
  * to our Choose an Avatar page.
  */
-exports.checkAvatar = function(req, res) {
+exports.checkAvatar = function (req, res) {
   if (req.user && req.user._id) {
     User.findOne({
       _id: req.user._id
     })
-    .exec(function(err, user) {
+    .exec(function (err, user) {
       if (user.avatar !== undefined) {
         res.redirect('/#!/');
       } else {
@@ -70,32 +75,38 @@ exports.checkAvatar = function(req, res) {
     // If user doesn't even exist, redirect to /
     res.redirect('/');
   }
-
 };
 
-/**
+/*
  * Create user
  */
-exports.create = function(req, res) {
+exports.create = function (req, res) {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
-    }).exec(function(err,existingUser) {
+    }).exec(function (err, existingUser) {
       if (!existingUser) {
         var user = new User(req.body);
         // Switch the user's avatar index to an actual avatar url
         user.avatar = avatars[user.avatar];
         user.provider = 'local';
-        user.save(function(err) {
+        user.save(function (err) {
           if (err) {
             return res.render('/#!/signup?error=unknown', {
               errors: err.errors,
               user: user
             });
           }
-          req.logIn(user, function(err) {
+          req.logIn(user, function (err) {
             if (err) return next(err);
-            return res.redirect('/#!/');
+            var userDetails = { email: user.email, password: user.password };
+            var token = jwt.sign(userDetails, config.secret, {
+              expiresIn: 60 * 60 * 24  // token expires in 24 hours
+            });
+            res.json({
+              status: true,
+              token: token
+            });
           });
         });
       } else {
@@ -106,18 +117,52 @@ exports.create = function(req, res) {
     return res.redirect('/#!/signup?error=incomplete');
   }
 };
+exports.login = function (req, res, next) {
+  if (!req.body.email || !req.body.password) {
+    return res.json({
+      success: false,
+      message: 'You need to enter email or password'
+    });
+  }
+  User.findOne({
+    email: req.body.email
+  }).exec(function (error, user) {
+    if (error) throw error;
+    if (!user) {
+      return res.json({
+        success: false,
+        message: 'Unable to Login. Invalid Credentials'
+      });
+    }
+    var isMatched = bcrypt.compareSync(req.body.password, user.hashed_password);
+    if (isMatched) {
+      req.logIn(user, function (err) {
+        if (err) return next(err);
+        var token = jwt.sign(user, config.secret, {
+          expiresIn: 1080 // in seconds
+        });
+        res.json({ success: true, token: token });
+      });
+    } else {
+      return res.json({
+        success: false,
+        message: 'Invalid password'
+      });
+    }
+  });
+};
 
 /**
  * Assign avatar to user
  */
-exports.avatars = function(req, res) {
+exports.avatars = function (req, res) {
   // Update the current user's profile to include the avatar choice they've made
   if (req.user && req.user._id && req.body.avatar !== undefined &&
     /\d/.test(req.body.avatar) && avatars[req.body.avatar]) {
     User.findOne({
       _id: req.user._id
     })
-    .exec(function(err, user) {
+    .exec(function (err, user) {
       user.avatar = avatars[req.body.avatar];
       user.save();
     });
@@ -125,17 +170,17 @@ exports.avatars = function(req, res) {
   return res.redirect('/#!/app');
 };
 
-exports.addDonation = function(req, res) {
+exports.addDonation = function (req, res) {
   if (req.body && req.user && req.user._id) {
     // Verify that the object contains crowdrise data
     if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
       User.findOne({
         _id: req.user._id
       })
-      .exec(function(err, user) {
+      .exec(function (err, user) {
         // Confirm that this object hasn't already been entered
         var duplicate = false;
-        for (var i = 0; i < user.donations.length; i++ ) {
+        for (var i = 0; i < user.donations.length; i++) {
           if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
             duplicate = true;
           }
@@ -151,11 +196,10 @@ exports.addDonation = function(req, res) {
   }
   res.send();
 };
-
 /**
  *  Show profile
  */
-exports.show = function(req, res) {
+exports.show = function (req, res) {
   var user = req.profile;
 
   res.render('users/show', {
@@ -167,19 +211,18 @@ exports.show = function(req, res) {
 /**
  * Send User
  */
-exports.me = function(req, res) {
+exports.me = function (req, res) {
   res.jsonp(req.user || null);
 };
-
 /**
  * Find user by id
  */
-exports.user = function(req, res, next, id) {
+exports.user = function (req, res, next, id) {
   User
     .findOne({
       _id: id
     })
-    .exec(function(err, user) {
+    .exec(function (err, user) {
       if (err) return next(err);
       if (!user) return next(new Error('Failed to load User ' + id));
       req.profile = user;
