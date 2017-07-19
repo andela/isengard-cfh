@@ -11,14 +11,14 @@ var config = require('../../config/config');
 /**
  * Auth callback
  */
-exports.authCallback = function(req, res, next) {
+exports.authCallback = function (req, res, next) {
   res.redirect('/chooseavatars');
 };
 
 /**
  * Show login form
  */
-exports.signin = function(req, res) {
+exports.signin = function (req, res) {
   if (!req.user) {
     res.redirect('/#!/signin?error=invalid');
   } else {
@@ -29,7 +29,7 @@ exports.signin = function(req, res) {
 /**
  * Show sign up form
  */
-exports.signup = function(req, res) {
+exports.signup = function (req, res) {
   if (!req.user) {
     res.redirect('/#!/signup');
   } else {
@@ -40,7 +40,7 @@ exports.signup = function(req, res) {
 /**
  * Logout
  */
-exports.signout = function(req, res) {
+exports.signout = function (req, res) {
   req.logout();
   // res.redirect('/');
   res.json({ message: 'Logged out',
@@ -50,7 +50,7 @@ exports.signout = function(req, res) {
 /**
  * Session
  */
-exports.session = function(req, res) {
+exports.session = function (req, res) {
   res.redirect('/');
 };
 
@@ -59,7 +59,7 @@ exports.session = function(req, res) {
  * already has an avatar. If they don't have one, redirect them
  * to our Choose an Avatar page.
  */
-exports.checkAvatar = function(req, res) {
+exports.checkAvatar = function (req, res) {
   if (req.user && req.user._id) {
     User.findOne({
       _id: req.user._id
@@ -80,7 +80,7 @@ exports.checkAvatar = function(req, res) {
 /*
  * Create user
  */
-exports.create = function(req, res) {
+exports.create = function (req, res) {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
@@ -97,7 +97,7 @@ exports.create = function(req, res) {
               user: user
             });
           }
-          req.logIn(user, function(err) {
+          req.logIn(user, function (err) {
             if (err) return next(err);
             var userDetails = { email: user.email, password: user.password };
             var token = jwt.sign(userDetails, config.secret, {
@@ -117,7 +117,6 @@ exports.create = function(req, res) {
     return res.redirect('/#!/signup?error=incomplete');
   }
 };
-
 exports.login = function (req, res, next) {
   if (!req.body.email || !req.body.password) {
     return res.json({
@@ -127,7 +126,7 @@ exports.login = function (req, res, next) {
   }
   User.findOne({
     email: req.body.email
-  }).exec(function(error, user) {
+  }).exec(function (error, user) {
     if (error) throw error;
     if (!user) {
       return res.json({
@@ -137,7 +136,7 @@ exports.login = function (req, res, next) {
     }
     var isMatched = bcrypt.compareSync(req.body.password, user.hashed_password);
     if (isMatched) {
-      req.logIn(user, function (err) {
+      req.logIn(user, function(err) {
         if (err) return next(err);
         var token = jwt.sign(user, config.secret, {
           expiresIn: 1080 // in seconds
@@ -156,7 +155,7 @@ exports.login = function (req, res, next) {
 /**
  * Assign avatar to user
  */
-exports.avatars = function(req, res) {
+exports.avatars = function (req, res) {
   // Update the current user's profile to include the avatar choice they've made
   if (req.user && req.user._id && req.body.avatar !== undefined &&
     /\d/.test(req.body.avatar) && avatars[req.body.avatar]) {
@@ -171,14 +170,14 @@ exports.avatars = function(req, res) {
   return res.redirect('/#!/app');
 };
 
-exports.addDonation = function(req, res) {
+exports.addDonation = function (req, res) {
   if (req.body && req.user && req.user._id) {
     // Verify that the object contains crowdrise data
     if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
       User.findOne({
         _id: req.user._id
       })
-      .exec(function(err, user) {
+      .exec(function (err, user) {
         // Confirm that this object hasn't already been entered
         var duplicate = false;
         for (var i = 0; i < user.donations.length; i++ ) {
@@ -197,11 +196,10 @@ exports.addDonation = function(req, res) {
   }
   res.send();
 };
-
 /**
  *  Show profile
  */
-exports.show = function(req, res) {
+exports.show = function (req, res) {
   var user = req.profile;
 
   res.render('users/show', {
@@ -213,19 +211,18 @@ exports.show = function(req, res) {
 /**
  * Send User
  */
-exports.me = function(req, res) {
+exports.me = function (req, res) {
   res.jsonp(req.user || null);
 };
-
 /**
  * Find user by id
  */
-exports.user = function(req, res, next, id) {
+exports.user = function (req, res, next, id) {
   User
     .findOne({
       _id: id
     })
-    .exec(function(err, user) {
+    .exec(function (err, user) {
       if (err) return next(err);
       if (!user) return next(new Error('Failed to load User ' + id));
       req.profile = user;

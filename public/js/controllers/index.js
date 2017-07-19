@@ -1,20 +1,18 @@
 angular.module('mean.system')
 .controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', '$http', '$window', function ($scope, Global, $location, socket, game, AvatarService, $http, $window) {
-    $scope.global = Global;
+  $scope.global = Global;
 
-    $scope.playAsGuest = function() {
-      game.joinGame();
-      $location.path('/app');
-    };
-
-    $scope.showError = function() {
-      if ($location.search().error) {
-        return $location.search().error;
-      } else {
-        return false;
-      }
-    };
-  $scope.signin = function() {
+  $scope.playAsGuest = function () {
+    game.joinGame();
+    $location.path('/app');
+  };
+  $scope.showError = function () {
+    if ($location.search().error) {
+      return $location.search().error;
+    }
+    return false;
+  };
+  $scope.signin = function () {
     $http.post('/api/auth/signin', JSON.stringify($scope.formData))
         .success(function (data) {
           if (data.success === true) {
@@ -36,22 +34,20 @@ angular.module('mean.system')
             }
           }
         })
-        .error(function(error) {
+        .error(function (error) {
           console.log(error.error);
         });
   };
-
-  $scope.signup = function() {
+  $scope.signup = function () {
     $http.post('/api/auth/signup', JSON.stringify($scope.formData))
-     .success(function(data) {
+     .success(function (data) {
        if (data.status === true) {
          $window.localStorage.setItem('token', JSON.stringify(data.token));
          $window.location.href = '/';
        }
      });
   };
-
-  $scope.playGame = function() {
+  $scope.playGame = function () {
     var token = $window.localStorage.getItem('token');
     var config = { headers: {
       Authorization: 'Bearer ' + token,
@@ -60,27 +56,25 @@ angular.module('mean.system')
     }
     };
     $http.get('/api/auth/play?custom', config)
-    .success(function(data) {
+    .success(function (data) {
       if (data.status === true) {
         $window.location.href = '/#!/app?custom';
       }
     });
   };
-
-  $scope.logout = function() {
+  $scope.logout = function () {
     $window.localStorage.removeItem('token');
     $http.get('/signout').success(function(data) {
       if (data.status === true) {
         $window.location.href = '/';
       }
-    }).error(function(error) {
+    }).error(function (error) {
       console.log(error.error);
     });
   };
-
   $scope.avatars = [];
   AvatarService.getAvatars()
-      .then(function(data) {
+      .then(function (data) {
         $scope.avatars = data;
       });
 }]);
