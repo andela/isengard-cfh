@@ -64,7 +64,7 @@ exports.checkAvatar = function (req, res) {
     User.findOne({
       _id: req.user._id
     })
-    .exec(function(err, user) {
+    .exec(function (err, user) {
       if (user.avatar !== undefined) {
         res.redirect('/#!/');
       } else {
@@ -84,13 +84,13 @@ exports.create = function (req, res) {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
-    }).exec(function(err, existingUser) {
+    }).exec(function (err, existingUser) {
       if (!existingUser) {
         var user = new User(req.body);
         // Switch the user's avatar index to an actual avatar url
         user.avatar = avatars[user.avatar];
         user.provider = 'local';
-        user.save(function(err) {
+        user.save(function (err) {
           if (err) {
             return res.render('/#!/signup?error=unknown', {
               errors: err.errors,
@@ -136,7 +136,7 @@ exports.login = function (req, res, next) {
     }
     var isMatched = bcrypt.compareSync(req.body.password, user.hashed_password);
     if (isMatched) {
-      req.logIn(user, function(err) {
+      req.logIn(user, function (err) {
         if (err) return next(err);
         var token = jwt.sign(user, config.secret, {
           expiresIn: 1080 // in seconds
@@ -162,7 +162,7 @@ exports.avatars = function (req, res) {
     User.findOne({
       _id: req.user._id
     })
-    .exec(function(err, user) {
+    .exec(function (err, user) {
       user.avatar = avatars[req.body.avatar];
       user.save();
     });
@@ -180,7 +180,7 @@ exports.addDonation = function (req, res) {
       .exec(function (err, user) {
         // Confirm that this object hasn't already been entered
         var duplicate = false;
-        for (var i = 0; i < user.donations.length; i++ ) {
+        for (var i = 0; i < user.donations.length; i++) {
           if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
             duplicate = true;
           }

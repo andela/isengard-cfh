@@ -35,7 +35,6 @@ angular.module('mean.system')
           }
         })
         .error(function (error) {
-          console.log(error.error);
         });
   };
   $scope.signup = function () {
@@ -64,12 +63,11 @@ angular.module('mean.system')
   };
   $scope.logout = function () {
     $window.localStorage.removeItem('token');
-    $http.get('/signout').success(function(data) {
+    $http.get('/signout').success(function (data) {
       if (data.status === true) {
         $window.location.href = '/';
       }
     }).error(function (error) {
-      console.log(error.error);
     });
   };
   $scope.avatars = [];

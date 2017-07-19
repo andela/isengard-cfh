@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    async = require('async'),
+  async = require('async'),
   jwt = require('jsonwebtoken');
 _ = require('underscore');
 var config = require('../../config/config');
@@ -15,12 +15,12 @@ exports.play = function (req, res) {
     var headerBearer = req.headers.authorization;
     var token = headerBearer.split(' ')[1];
     if (token) {
-      jwt.verify(token, config.secret, function(err, decoded) {
+      jwt.verify(token, config.secret, function (err, decoded) {
         if (err) {
           res.json({ status: false,
             message: 'Authentication failed' });
         }
-        res.json({ status: true });
+        res.json({ status: true, user: decoded });
       });
     }
     // res.redirect('/#!/app?custom');
