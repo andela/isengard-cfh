@@ -181,4 +181,10 @@ angular.module('mean.system')
       game.joinGame();
     }
 
+    $scope.$watch ('game.modal', function() {
+      if (game.modal === 'Cannot join game, maximum number of players exceeded') {
+        $scope.modalShown = !$scope.modalShown;
+      }
+    });
+
 }]);

@@ -162,6 +162,7 @@ module.exports = function(io) {
       socket.join(game.gameID);
       socket.gameID = game.gameID;
       console.log(socket.id,'has joined newly created game',game.gameID);
+      socket.emit('MaxNumberOfPlayersExceeded');
       game.assignPlayerColors();
       game.assignGuestNames();
       game.sendUpdate();
