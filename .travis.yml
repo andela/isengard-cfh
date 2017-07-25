@@ -8,4 +8,4 @@ before_script:
 env:
   global:
   - NODE_ENV=travis
-  - MONGOHQ_URL=mongo://localhost
+  - MONGOHQ_URL=mongodb://localhost
