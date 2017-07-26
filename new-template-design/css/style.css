@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css?family=Berkshire+Swash');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Rambla');
+
+body {
+  background-color: whitesmoke;
+  font-family: 'Open Sans', sans-serif;
+}
+ /* .row .col.m8{
+    margin-left: 25%;
+    }  */
+p, p.flow-text {
+  font-size: 1.4em;
+}
+
+p.flow-text.charity {
+   font-size: 1.2em; 
+}
+
+p {
+  line-height: 2rem;
+} 
+
+h1, h2, h3, h4, h6, span.head {
+  font-family: 'Rambla', sans-serif;
+}
+
+.card .card-content span.head.card-title {
+  margin-bottom: 2px;
+}
+
+.parallax-container {
+     min-height: 500px;   
+  /* min-width: 100px; */
+  line-height: 0;
+    height: auto;  
+  color: rgba(255,255,255,1); 
+}
+
+#overlay {
+  background: #000;
+  min-height: 500px;
+  line-height: 0;
+  height: 100%;
+  min-width: 100%; 
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  position: absolute; 
+  padding: 0;
+  transition: opacity .5s;
+}
+
+#sidenav-overlay {
+   position: relative; 
+  /* background-color: initial; */
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+
+.info-block {
+  padding: 100px 25px;
+  min-height: 350px;
+}
+
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+.block {
+  background-image: url("../download.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  position: relative;  
+}
+
+.block::before {
+  content: '';  
+  position: absolute; 
+  left: 0; right: 0;
+  top: 0; bottom: 0;
+  background: rgba(0,0,0,.5);
+}
+
+.landing.container {
+  /* padding-top: 120px; */
+  position: relative;
+  /* left: 0; right: 0;
+  top: 0; bottom: 0; */
+  /* height: 100vh; */
+}
+
+.nav-block {
+  display: block;
+}  
+
+footer.page-footer, footer.footer-copyright, div.card {
+  background-color: #390A0D;
+}
+
+div.card.light-background {
+  background-color: #472224;
+}
+
+.card-title-divider.a {
+  margin-left: 50px;
+  margin-right: 125px;
+}
+
+.card-title-divider.b {
+  margin-left: 55px;
+  margin-right: 115px;
+}
+
+.card-title-divider.c {
+  margin-left: 125px;
+  margin-right: 50px;
+}
+
+.card-title-divider.d {
+  margin-left: 115px;
+  margin-right: 55px;
+}
+
+.logo-text {
+  font-family: 'Berkshire Swash', cursive;
+}
+
+nav {
+  padding-left: 10px;
+}
+
+.parallax img {
+  width: 100%;
+  max-width: 300px;
+}
+
+div.makeawish.row {
+  padding-top: 0px;
+} 
+/* .parallax-container {
+  height: 500px;
+} */
+
+footer {
+  bottom: 0px;
+}
+
+.footer-content {
+  font-size: 0.6em;
+  line-height: 1rem;
+  padding: 0;
+  bottom: 0;
+  margin: 0;
+}
+
+.footer-copyright {
+  padding: 0;
+  bottom: 0;
+  margin: 0;
+}
+
+@media (max-width : 500px) {
+  nav .brand-logo {
+    font-size: 1.6em;
+  }
+  .btn-large{
+    margin-bottom: 2%;
+  }
+}
+
+/* @media only screen and (min-width: 601px) {
+   .row .col.m8{
+    width: auto;
+  } 
+}
+
+@media only screen and (max-width: 601px) {
+   .row .col.m8{
+    width: auto;
+  } 
+} */
+
+@media (max-width : 386px) {
+  nav .brand-logo {
+     font-size: 1.2em;
+     text-align: center;
+  }
+}
+
+@media (max-width : 292px) {
+  nav .brand-logo {
+     font-size: 0.8em;
+     text-align: center;
+  }
+}
+
+@media (max-width : 198px) {
+  nav .brand-logo {
+     font-size: 0.5em;
+     text-align: center;
+  }
+}
+@media (max-width : 699px) {
+.parallax-container{
+  display: none;
+}
+  .parallax-container2{
+    background: url('../phil-coffman-161251.jpg') no-repeat;
+    background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    color: #fff;
+    position: relative;
+    min-height: auto;
+    font-size: 0.9em;
+  }
+
+  .parallax-container2::before {
+    content: '';  
+    position: absolute; 
+    left: 0; right: 0;
+    top: 0; bottom: 0;
+    background: rgba(0,0,0,.5);
+  }
+
+  .paralax.container {
+    /* padding-top: 120px; */
+     position: relative; 
+    /* left: 0; right: 0;
+    top: 0; bottom: 0; */
+  }
+
+}
+
+@media (min-width: 700px) {
+  .parallax-container2 {
+    display: none;
+  }
+}
+
+@media (max-width: 290px) {
+  h1.header {
+    font-size: 3.0em;
+  }
+}
+
+@media (max-width: 210px) {
+  h1.header {
+    font-size: 2.0em;
+  }
+}
