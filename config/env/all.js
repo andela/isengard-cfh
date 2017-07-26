@@ -6,6 +6,6 @@ const keys = rootPath + '/keys.txt';
 module.exports = {
   root: rootPath,
   port: process.env.PORT || 3000,
-  db: 'mongodb://localhost:27017/myproject',
-  secret: 'my secret key'
+  db: process.env.MONGOHQ_URL,
+  secret: process.env.SECRET_KEY
 };
