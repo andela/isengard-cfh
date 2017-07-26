@@ -3,6 +3,6 @@ public/lib
 .sass-cache/
 .DS_store
 c4h_keys.txt
-
+bower_components/
 .env
 test/article/model.js
