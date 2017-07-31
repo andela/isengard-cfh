@@ -6,3 +6,5 @@ c4h_keys.txt
 
 .env
 test/article/model.js
+npm-debug.log
+package-lock.json
