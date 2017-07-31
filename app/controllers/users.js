@@ -22,7 +22,14 @@ exports.signin = function (req, res) {
   if (!req.user) {
     res.redirect('/#!/signin?error=invalid');
   } else {
-    res.redirect('/#!/app');
+    const token = jwt.sign(req.user, config.secret, {
+      expiresIn: 60 * 60 * 24
+    });
+    res.json({
+      success: true,
+      token
+    });
+    // res.redirect('/#!/app');
   }
 };
 
