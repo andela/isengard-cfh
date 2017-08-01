@@ -70,9 +70,17 @@ angular.module('mean.system')
     }).error(function (error) {
     });
   };
+  $scope.selectAvatar = function(event, avatarIndex) {
+    const selectedAvatar = event.currentTarget;
+    $('.avatars').removeClass('avatar-selected');
+    $(selectedAvatar).addClass('avatar-selected');
+    if ($scope.formData) {
+      $scope.formData.avatar = avatarIndex;
+    }
+  };
   $scope.avatars = [];
   AvatarService.getAvatars()
-      .then(function (data) {
-        $scope.avatars = data;
-      });
+  .then(function (data) {
+    $scope.avatars = data;
+  });
 }]);
