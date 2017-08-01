@@ -1,17 +1,4 @@
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Parallax Template - Materialize</title>
-
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="https://use.fontawesome.com/a8ed4aa4cf.js"></script>
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-</head>
-<body>-->
-
+<div landing ng-controller="IndexController">
   <div class="row block">
     <div class="navbar-fixed">
       <nav class="" role="navigation"> 
@@ -22,8 +9,13 @@
             <li><a onClick="scroll(0,1100);">How to play</a></li>
             <li><a onClick="scroll(0,1750);">Charity</a></li>
             <li><a onClick="scroll(0,2200);">About Us</a></li>
-            <li><a href="#">Sign Up</a></li>
-            <li><a href="#">Sign In</a></li>
+            <span ng-show="showOptions">
+              <li><button data-target="sign-up" class="btn btn-flat white-text modal-trigger btn-menu">Sign Up</button></li>
+              <li><button data-target="log-in" class="btn btn-flat white-text modal-trigger btn-menu">Sign In</button></li>
+            </span>
+            <span ng-hide="showOptions">
+              <li><a ng-click="logout()" method="get">Sign Out</a></li>
+            </span>
             <li><a href="#" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
           </ul>
 
@@ -32,8 +24,13 @@
             <li><a onClick="scroll(0,1400);">How to play</a></li>
             <li><a onClick="scroll(0,2450);">Charity</a></li>
             <li><a onClick="scroll(0,3000);">About Us</a></li>
-            <li><a href="#">Sign Up</a></li>
-            <li><a href="#">Sign In</a></li>
+            <span ng-show="showOptions">
+              <li><button data-target="sign-up" class="btn btn-flat black-text modal-trigger btn-menu">Sign Up</button></li>
+              <li><button data-target="log-in" class="btn btn-flat black-text modal-trigger btn-menu">Sign In</button></li>
+            </span>
+            <span ng-hide="showOptions">
+              <li><a ng-click="logout()" class="btn-menu" method="get">Sign Out</a></li>
+            </span>
             <li><a href="#" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
           </ul>
           <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -58,7 +55,7 @@
         <br><br>
         <br><br>
         <div class="row col m12 s12 center-align">
-          <a href="#" id="download-button" class="btn-large waves-effect waves-light deep-orange accent-3">Play as Guest</a>
+          <a href="/play" id="download-button" class="btn-large waves-effect waves-light deep-orange accent-3">Play as Guest</a>
           <a href="#" id="download-button" class="btn-large waves-effect waves-light deep-orange accent-3">Play with Friends</a>
         </div>
         <br><br>
@@ -194,7 +191,7 @@
       </div>
     <div class="makeawish row"><img class="col m5 push-m7 s7 push-s5" src="img/makeawish.png" alt="make a wish logo"></div>      
     </div>
-   
+    
   </div>
 
   <div class="container">
@@ -235,5 +232,75 @@
       </div>
     </div>
   </footer>
-  <!--</body>
-</html>-->
+
+  <!-- Modal Structure -->
+  <div id="sign-up" class="modal" ng-controller="IndexController">
+    <div class="modal-content">
+      <div class = "modal-header-flex">
+        <h4>Create Account @ CFH</h4>
+        <div class="signup-alt">
+          <span>Sign up with</span>
+          <a href="/auth/facebook"><i class="fa fa-facebook"></i></a>
+          <a href="/auth/twitter"><i class="fa fa-twitter"></i></a>
+          <a href="/auth/google"><i class="fa fa-google-plus"></i></a>
+          <a href="/auth/github"><i class="fa fa-github"></i></a>
+        </div>
+      </div>
+      <hr>
+      <div class="form">
+        <div class="input-field">
+          <input class="input-info" id="name" ng-model="formData.name" type="text" name="name" placeholder="Tomi Akande" required novalidate />
+          <label for="name">Full Name</label>
+        </div>
+        <div class="input-field">
+          <input class="input-info" id="email" ng-model="formData.email" type="email" name="email" placeholder="oluwatomi.akande@andela.com" required novalidate />
+          <label for="email">Email</label>
+        </div>
+        <div class="input-field">
+          <input class="input-info" id="password" ng-model="formData.password"  type="password" name="password" placeholder="******" required novalidate />
+          <label for="password">Password</label>
+        </div>
+        <div class="input-field">
+          <span> Select Avatar </span>
+        </div>
+        <div class='display-avatar' ng-controller="IndexController">
+          <span ng-repeat="avatar in avatars" class="avatars ng-scope" ng-click="selectAvatar($event, $index)">
+            <img ng-src="{{avatar}}"></img>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="signup()">Sign Up</a>
+    </div>
+  </div>
+
+  <div id="log-in" class="modal">
+    <div class="modal-content">
+      <div class = "modal-header-flex">
+        <h4>Login to CFH</h4>
+        <div class="signup-alt">
+          <span>Log in with</span>
+          <a href="/auth/facebook"><i class="fa fa-facebook"></i></a>
+          <a href="/auth/twitter"><i class="fa fa-twitter"></i></a>
+          <a href="/auth/google"><i class="fa fa-google-plus"></i></a>
+          <a href="/auth/github"><i class="fa fa-github"></i></a>
+        </div>
+      </div>
+      <hr>
+      <div class='form'>
+        <div class="input-field">
+          <input class="input-info" id="email" ng-model="formData.email" type="email" name="email" placeholder="oluwatomi.akande@andela.com" required novalidate />
+          <label for="email">Email</label>
+        </div>
+        <div class="input-field">
+          <input class="input-info" id="password" ng-model="formData.password"  type="password" name="password" placeholder="******" required novalidate />
+          <label for="password">Password</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="signin()">Log In</a>
+    </div>
+  </div>
+</div>
