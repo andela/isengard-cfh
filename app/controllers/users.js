@@ -87,7 +87,7 @@ exports.checkAvatar = function (req, res) {
 /*
  * Create user
  */
-exports.create = function (req, res) {
+exports.create = function (req, res, next) {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
