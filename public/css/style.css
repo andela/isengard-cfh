@@ -1285,7 +1285,9 @@
 }
 .ng-modal-dialog-content {
   padding:10px;
-  text-align: left;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
 }
 .ng-modal-close {
   position: absolute;

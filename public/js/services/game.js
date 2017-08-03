@@ -17,6 +17,7 @@ angular.module('mean.system')
     state: null,
     round: 0,
     time: 0,
+    modal: null,
     curQuestion: null,
     notification: null,
     timeLimits: {},
@@ -64,10 +65,12 @@ angular.module('mean.system')
     game.playerMaxLimit = data.playerMaxLimit;
     game.pointLimit = data.pointLimit;
     game.timeLimits = data.timeLimits;
+    game.state = data.state;
   });
 
-  // Event listener for when the maximum number of players is exceeded and new game is created
+  // event listener 
   socket.on('MaxNumberOfPlayersExceeded', function(data) {
+    //addToNotificationQueue('Cannot join game, maximum number of players exceeded');
     game.modal = 'Cannot join game, maximum number of players exceeded';
   });
 
