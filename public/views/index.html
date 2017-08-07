@@ -16,7 +16,7 @@
             <span ng-hide="showOptions">
               <li><a ng-click="logout()" method="get">Sign Out</a></li>
             </span>
-            <li><a href="#" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
+            <li><a href="https://www.crowdrise.com/donate/project/cfhio/cards4humanity/?widget=true" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
           </ul>
 
           <ul id="nav-mobile" class="side-nav">
@@ -31,7 +31,7 @@
             <span ng-hide="showOptions">
               <li><a ng-click="logout()" class="btn-menu" method="get">Sign Out</a></li>
             </span>
-            <li><a href="#" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
+            <li><a href="https://www.crowdrise.com/donate/project/cfhio/cards4humanity/?widget=true" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
           </ul>
           <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
         </div>
@@ -48,15 +48,21 @@
           <h1 class="header center-align">CARDS <span class="amber-text">for</span> HUMANITY</h1>
         </div>
         <div class="row col m12 s12 white-text">
-          <h5 class="flow-text center-align valign light">A Game for Horrible People Desperately Trying to do Good</h5>
+          <h5 class="flow-text center-align valign light">A Game for Wistful People Desperately Trying to do Good</h5>
         </div>
         <br><br>
         <br><br>
         <br><br>
         <br><br>
-        <div class="row col m12 s12 center-align">
-          <a href="/play" id="download-button" class="btn-large waves-effect waves-light deep-orange accent-3">Play as Guest</a>
-          <a href="#" id="download-button" class="btn-large waves-effect waves-light deep-orange accent-3">Play with Friends</a>
+        <div id="btn-align" class="row col m12 s12 center-align">
+          <span ng-show="showOptions">
+            <a href="/play" id="download-button" class="btn-large a waves-effect waves-light deep-orange accent-3">Play as Guest</a>
+            <button data-target="log-in" class="btn-large waves-effect waves-light deep-orange accent-3 modal-trigger btn-menu">Play with Friends</button>
+          </span>
+          <span ng-hide="showOptions">
+            <a href="/play" id="download-button" class="btn-large a waves-effect waves-light deep-orange accent-3">Play with Strangers</a>
+            <a href="" ng-click="playGame()" id="download-button" class="btn-large a waves-effect waves-light deep-orange accent-3">Play with Friends</a>
+          </span>
         </div>
         <br><br>
 
