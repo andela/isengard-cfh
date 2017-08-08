@@ -280,6 +280,12 @@ h4 {
   padding: 18px 24px;
 }
 
+#gameplay-container {
+  padding: 10px;
+  position: relative;
+}
+
+
 @media (max-width : 500px) {
   nav .brand-logo {
     font-size: 1.6em;
@@ -426,4 +432,6 @@ align-center a:hover,
   color: #ffc107;
   font-weight: 300;
 }
+
+/* Game Area  */
 
