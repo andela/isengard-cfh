@@ -1,5 +1,5 @@
 </script>
-<div class="block" ng-controller="GameController">
+<div class="block-gaming-area" ng-controller="GameController">
   <!-- <div id="menu-container">
     <div id="logo">
       <span id="first-word">Cards</span>
@@ -54,26 +54,50 @@
     </nav>
   </div>
 
-  <div class="row">
+  <!-- <div class="row">
     <div id="gameplay-container">
       <div class="row">
-        <!-- <div id="menu-timeremaining-container"> -->
           <div id="menu-container">
             <span id="menu-button">Menu</span>
           </div>
-          <!-- <div class="row"> -->
             <div class="col s12 m2">
               <timer></timer>
             </div>
-          <!-- </div> -->
-        <!-- </div> -->
-        <!-- <div class="row"> -->
+         
           <div class="col s12 m6">
             <question></question>
           </div>
-        <!-- </div> -->
       </div>
       <answers></answers>
     </div>
+  </div> -->
+
+  <div class="row game-container">
+    <div class="row valign-wrapper">
+      <!-- Time Remaining -->
+      <div class="col s12 m2">
+        <timer></timer>
+      </div>
+      <!-- Questions  -->
+      <div class="col s12 m7">
+        <question></question>
+      </div>
+      <!-- Avatars  -->
+      <div class="col s12 m3">
+        <div class="card-panel">
+          <span class="white-text">
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 m9">
+        <div class="card-panel answers-panel">
+          <span class="white-text">
+          </span>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </div>
