@@ -66,8 +66,8 @@ h1, h2, h3, h4, h6, span.head {
 }
 
 .info-block {
-  padding: 100px 25px;
-  min-height: 350px;
+  padding: 50px 25px;
+  /* min-height: 350px; */
 }
 
 .icon-block .material-icons {
@@ -82,7 +82,7 @@ footer.page-footer {
   background-image: url("../img/download.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh;
+  min-height: 100vh;
   position: relative;  
 }
 
@@ -91,7 +91,7 @@ footer.page-footer {
   position: absolute; 
   left: 0; right: 0;
   top: 0; bottom: 0;
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .landing.container {
@@ -403,6 +403,7 @@ h4 {
 }
 
 /*STYLING FOR GAME LOG PAGE*/
+
 .dashboard-nav {
   background-color: #030000;
   margin: 0;
@@ -433,5 +434,88 @@ align-center a:hover,
   font-weight: 300;
 }
 
-/* Game Area  */
+/* Game Area */
 
+.block-gaming-area {
+  background-image: url("../img/download.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  position: relative;  
+}
+
+.block-gaming-area::before {
+  content: '';  
+  position: absolute; 
+  left: 0; right: 0;
+  top: 0; bottom: 0;
+  background: rgba(57, 10, 13, 0.4);
+}
+
+.game-container {
+  padding: 10px;
+  position: relative; 
+}
+
+.time-question {
+  min-height: 250px;
+  padding: 5px;
+}
+
+.card-panel {
+  background-color: rgba(57, 10, 13, 0.5);
+  /* opacity: 0.1;  */
+  border-radius: 0px;
+  padding: 0;
+}
+
+.timer {
+  font-size: 8rem;
+  margin: 0;
+}
+
+.timer-info {
+   /* display: inline-block; */
+   font-family: 'Rambla', sans-serif;
+   font-size: 1.3em;
+   font-weight: bold;
+   /* font-style: italic; */
+}
+
+.answers-panel {
+  min-height: 250px;
+}
+
+.player-count {
+  font-size: 2.6rem !important;
+  /* margin: 0 auto; */
+}
+
+.player-count-div {
+   margin-top: 50px; 
+
+}
+
+.find-players-div {
+   /* margin-top: 30px; */
+    /* padding-left: 20px !important;  */
+ 
+}
+
+.find-players {
+  /* top: 8px; */
+  font-size: 2.0rem;
+  /* margin-top: 0px; */
+}
+
+.notifications {
+  position: static;
+  margin-top: 60px;
+}
+
+.start-btn {
+  line-height: normal;
+  height: initial;
+  padding: 5px;
+  display: block;
+}
