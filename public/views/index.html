@@ -56,12 +56,12 @@
         <br><br>
         <div id="btn-align" class="row col m12 s12 center-align">
           <span ng-show="showOptions">
-            <a href="/play" id="download-button" class="btn-large a waves-effect waves-light deep-orange accent-3">Play as Guest</a>
+            <button data-target="region" class="btn-large a waves-effect waves-light deep-orange accent-3 modal-trigger">Play as Guest</button> 
             <button data-target="log-in" class="btn-large waves-effect waves-light deep-orange accent-3 modal-trigger btn-menu">Play with Friends</button>
           </span>
           <span ng-hide="showOptions">
-            <a href="/play" id="download-button" class="btn-large a waves-effect waves-light deep-orange accent-3">Play with Strangers</a>
-            <a href="" ng-click="playGame()" id="download-button" class="btn-large a waves-effect waves-light deep-orange accent-3">Play with Friends</a>
+            <button data-target="region" class="btn-large a waves-effect waves-light deep-orange accent-3 modal-trigger btn-menu">Play with Strangers</button>
+            <a href="" ng-click="playGame()" class="btn-large a waves-effect waves-light deep-orange accent-3">Play with Friends</a>
           </span>
         </div>
         <br><br>
@@ -233,7 +233,32 @@
     </div>
   </footer>
 
-  <!-- Modal Structure -->
+  <!-- Region Modal Structure -->
+  <div id="region" class="modal" ng-controller="IndexController">
+    <div class="modal-content">
+      <div class = "modal-header-flex">
+        <h4>Specify a Region</h4>
+      </div>
+      <hr>
+      <div class="form region-form">
+        <div class="input-field">
+          <span>Select region based on the card questions you want</span>
+          <select>
+            <option value="" disabled selected>Choose your option</option>
+            <option value="1">Africa</option>
+            <option value="2">Asia</option>
+            <option value="3">America</option>
+            <option value="4">Europe</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="selectRegion()"><strong>Create Game</strong></a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat"><strong>Cancel</strong></a>
+    </div>
+  </div>
+  <!-- Signup Modal Structure -->
   <div id="sign-up" class="modal" ng-controller="IndexController">
     <div class="modal-content">
       <div class = "modal-header-flex">
@@ -274,7 +299,7 @@
       <a href="" class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="signup()">Sign Up</a>
     </div>
   </div>
-
+  <!-- Login Modal Structure -->
   <div id="log-in" class="modal">
     <div class="modal-content">
       <div class = "modal-header-flex">

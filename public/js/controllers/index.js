@@ -46,6 +46,9 @@ angular.module('mean.system')
        }
      });
   };
+  $scope.selectRegion = function () {
+    $window.location.href = '/play';
+  };
   $scope.playGame = function () {
     var token = $window.localStorage.getItem('token');
     var config = { headers: {
