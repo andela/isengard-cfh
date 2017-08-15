@@ -395,3 +395,25 @@ h4 {
     margin-bottom: 0.6rem;
   }
 }
+
+.special-czar-card {
+  width: 22%;
+  padding: 10px;
+  transition: transform 1s, background 0s 0.3s, right 2s ease 1s, opacity 2s ease-out 2s;
+}
+.special-czar-card.slide {
+  transform: rotateY( 150deg );
+}
+
+.special-czar-card.slide.none {
+  display: none;
+}
+
+.czar-modal {
+  display: flex;
+  justify-content: center;
+}
+
+div.modal-overlay {
+  opacity: 0.8 !important;
+}

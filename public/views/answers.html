@@ -1,3 +1,9 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+</script>
+
 <div ng-cloak id="cards-container" ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
   <div id="social-bar-container">
     <player></player>
@@ -69,6 +75,21 @@
       <!-- <script type="text/javascript" src="https://apisandbox.crowdrise.com/widgets/donate/project/36715/?callback=userDonationCb"></script> -->
   </div>
 </div>
+  <!--<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>-->
+
+  <!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content czar-modal">
+      <div ng-click="flipCards()">
+        <img class="modal-action modal-close" src="../img/black-card-6.jpg" />
+      </div>
+  </div>
+</div>
+<!--<div class="czar-modal" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+  <div ng-click="flipCards()">
+    <img src="../img/black-card-6.jpg" class=""/>
+ </div>
+</div>-->
 <div id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
   <div id="czar-blank-inner">
     You are the Card Czar. <br>
