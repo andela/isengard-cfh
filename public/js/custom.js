@@ -2,7 +2,6 @@ $(document).ready(($) => {
   $('.modal').modal();
   $('.button-collapse').sideNav();
   $('.parallax').parallax();
-  $('select').material_select();
 
   $('nav').css('background-color', 'transparent');
   $('#nav-divider').css('background-color', 'rgba(255,187,10,1)');
