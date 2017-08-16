@@ -95,4 +95,8 @@ module.exports = function(app, passport, auth) {
   app.get('/play', index.play);
   app.get('/', index.render);
   app.get('/api/auth/play', index.play);
+    // Game routes
+  var game = require('../app/controllers/game');
+  app.post('/api/games/:id/start', game.startGame);
+  app.post('/api/games/:id/end', game.endGame);
 };
