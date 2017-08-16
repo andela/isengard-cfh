@@ -7,31 +7,10 @@ const config = require('../../config/config');
 
 const Game = mongoose.model('Game');
 const User = mongoose.model('User');
-/**
- * Redirect users to /#!/app (forcing Angular to reload the page)
- */
-exports.play = function (req, res) {
-  if (Object.keys(req.query)[0] === 'custom') {
-    var headerBearer = req.headers.authorization;
-    var token = headerBearer.split(' ')[1];
-    if (token) {
-      jwt.verify(token, config.secret, function (err, decoded) {
-        if (err) {
-          res.json({ status: false,
-            message: 'Authentication failed' });
-        }
-        res.json({ status: true, user: decoded });
-      });
-    }
-    // res.redirect('/#!/app?custom');
-  } else {
-    res.redirect('/#!/app');
-  }
-};
+
 exports.startGame = function (req, res) {
-  // const headerBearer = req.headers.authorization;
-  // const token = headerBearer.split(' ')[1];
-  const token = req.headers.authorization;
+  const headerBearer = req.headers.authorization;
+  const token = headerBearer.split(' ')[1];
   if (token) {
     jwt.verify(token, config.secret, function(err, decoded) {
       if (err) {
@@ -100,9 +79,8 @@ exports.startGame = function (req, res) {
 };
 
 exports.endGame = function(req, res) {
-  // const headerBearer = req.headers.authorization;
-  // const token = headerBearer.split(' ')[1];
-  const token = req.headers.authorization;
+  const headerBearer = req.headers.authorization;
+  const token = headerBearer.split(' ')[1];
   if (token) {
     jwt.verify(token, config.secret, function(err, decoded) {
       if (err) {
