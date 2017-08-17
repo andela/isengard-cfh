@@ -1,9 +1,6 @@
 angular.module('mean.system')
   .controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', '$http', '$window', function ($scope, Global, $location, socket, game, AvatarService, $http, $window) {
     $scope.global = Global;
-    $scope.data = {
-      region: null
-    };
 
     $scope.playAsGuest = function () {
       game.joinGame();
@@ -48,24 +45,6 @@ angular.module('mean.system')
             $window.location.href = '/';
           }
         });
-    };
-
-    $scope.regionModal = function () {
-      const guestModal = $('#region');
-      guestModal.modal('open');
-    };
-    
-    $scope.selectRegion = function () {
-      if ($scope.data.region === null) {
-        Materialize.toast('No Region Selected!!', 4000, 'red');
-        return;
-      }
-      var region = { region: $scope.data.region };
-      $http.post('/region', JSON.stringify(region));
-
-      const guestModal = $('#region');
-      guestModal.modal('close');
-      $window.location.href = '/play';
     };
 
     $scope.playGame = function () {
