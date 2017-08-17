@@ -30,4 +30,29 @@
     </div>
     <answers></answers>
   </div>
+  <!-- Region Modal Structure -->
+  <div id="region" class="modal" ng-controller="IndexController">
+    <form>
+      <div class="modal-content">
+        <div class = "modal-header-flex">
+          <h4>Specify a Region</h4>
+        </div>
+        <hr>
+        <div class="modal-body region-form">
+          <span>Select region based on the card questions you want</span>
+          <select class="form-control" name="region" ng-model="data.region" style="display: block">
+            <option value="" disabled selected>Choose your option</option>
+            <option value="Africa">Africa</option>
+            <option value="Asia">Asia</option>
+            <option value="America">America</option>
+            <option value="Europe">Europe</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-action waves-effect waves-red btn-flat" ng-click="selectRegion()"><strong>Play Game</strong></button>
+        <a href="" class="modal-action modal-close waves-effect waves-red btn-flat"><strong>Cancel</strong></a>
+      </div>
+    </form>
+  </div>
 </div>
