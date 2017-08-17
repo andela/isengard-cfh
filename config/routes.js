@@ -100,4 +100,8 @@ module.exports = function(app, passport, auth) {
   app.get('/api/auth/leaderboard', users.leaderBoard);
 
   app.get('/api/auth/donations', users.getDonation);
+    // Game routes
+  var game = require('../app/controllers/game');
+  app.post('/api/games/:id/start', game.startGame);
+  app.post('/api/games/:id/end', game.endGame);
 };
