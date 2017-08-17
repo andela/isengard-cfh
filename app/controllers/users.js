@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
   User = mongoose.model('User');
 var avatars = require('./avatars').all();
 var config = require('../../config/config');
+var env = require('dotenv').config();
 
 /**
  * Auth callback
@@ -146,7 +147,7 @@ exports.login = function (req, res, next) {
       req.logIn(user, function (err) {
         if (err) return next(err);
         var token = jwt.sign(user, config.secret, {
-          expiresIn: 1080 // in seconds
+          expiresIn: 60 * 60 * 24 // in seconds
         });
         res.json({ success: true, token: token });
       });
@@ -160,11 +161,29 @@ exports.login = function (req, res, next) {
 };
 
 /**
+ * @func
+ */
+exports.getDonation = function (req, res) {
+  if (req.user && req.user._id) {
+    User.findOne({
+      _id: req.user._id
+    })
+    .exec(function (err, user) {
+      if (user.avatar !== undefined) {
+        res.redirect('/#!/');
+      } else {
+        res.redirect('/#!/choose-avatar');
+      }
+    });
+  }
+};
+
+/**
  * Assign avatar to user
  */
-exports.avatars = function (req, res) {
+  exports.avatars = function (req, res) {
   // Update the current user's profile to include the avatar choice they've made
-  if (req.user && req.user._id && req.body.avatar !== undefined &&
+    if (req.user && req.user._id && req.body.avatar !== undefined &&
     /\d/.test(req.body.avatar) && avatars[req.body.avatar]) {
     User.findOne({
       _id: req.user._id
@@ -173,17 +192,17 @@ exports.avatars = function (req, res) {
       user.avatar = avatars[req.body.avatar];
       user.save();
     });
-  }
-  return res.redirect('/#!/app');
-};
+    }
+    return res.redirect('/#!/app');
+  };
 
-exports.addDonation = function (req, res) {
-  if (req.body && req.user && req.user._id) {
+  exports.addDonation = function (req, res) {
+    if (req.body && req.user && req.user._id) {
     // Verify that the object contains crowdrise data
-    if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
-      User.findOne({
-        _id: req.user._id
-      })
+      if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
+        User.findOne({
+          _id: req.user._id
+        })
       .exec(function (err, user) {
         // Confirm that this object hasn't already been entered
         var duplicate = false;
@@ -199,33 +218,33 @@ exports.addDonation = function (req, res) {
           user.save();
         }
       });
+      }
     }
-  }
-  res.send();
-};
+    res.send();
+  };
 /**
  *  Show profile
  */
-exports.show = function (req, res) {
-  var user = req.profile;
+  exports.show = function (req, res) {
+    var user = req.profile;
 
-  res.render('users/show', {
-    title: user.name,
-    user: user
-  });
-};
+    res.render('users/show', {
+      title: user.name,
+       user: user
+    });
+  };
 
 /**
  * Send User
  */
-exports.me = function (req, res) {
-  res.jsonp(req.user || null);
-};
+  exports.me = function (req, res) {
+    res.jsonp(req.user || null);
+  };
 /**
  * Find user by id
  */
-exports.user = function (req, res, next, id) {
-  User
+  exports.user = function (req, res, next, id) {
+    User
     .findOne({
       _id: id
     })
@@ -235,4 +254,20 @@ exports.user = function (req, res, next, id) {
       req.profile = user;
       next();
     });
-};
+  };
+
+  exports.leaderBoard = function (req, res) {
+    var headerBearer = req.headers.authorization;
+    var token = headerBearer.split(' ')[1];
+    if (token) {
+      jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
+        if (err) {
+          res.json({ status: false,
+            message: 'Authentication failed' });
+        }
+        const users = [{ id: 1, name: 'PAUL', wins: 6 }, { id: 3, name: 'PETER', wins: 4 }];
+        res.json({ status: 'success',
+          users });
+      });
+    }
+  };

@@ -3,7 +3,7 @@ angular.module('mean.system')
   $scope.global = Global;
 
   $(document).ready(function() {
-    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+  // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
     $('.button-collapse').sideNav();
     $('.parallax').parallax();
@@ -56,7 +56,7 @@ angular.module('mean.system')
     $http.post('/api/auth/signup', JSON.stringify($scope.formData))
      .success(function (data) {
        if (data.status === true) {
-         $window.localStorage.setItem('token', JSON.stringify(data.token));
+         $window.localStorage.setItem('token', data.token);
          $window.location.href = '/';
        }
      });
@@ -85,6 +85,19 @@ angular.module('mean.system')
     }).error(function (error) {
     });
   };
+  $scope.leaderboard = function () {
+    var token = $window.localStorage.getItem('token');
+    var config = { headers: {
+      Authorization: 'Bearer ' + token,
+      Accept: 'application/json;odata=verbose',
+      'X-Testing': 'testing'
+    }
+  };
+    $http.get('/api/auth/leaderboard', config).success(function (data) {
+      $scope.winners = data.users;
+    });
+
+  }
   $scope.selectAvatar = function(event, avatarIndex) {
     const selectedAvatar = event.currentTarget;
     $('.avatars').removeClass('avatar-selected');

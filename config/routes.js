@@ -9,7 +9,7 @@ module.exports = function(app, passport, auth) {
   app.get('/chooseavatars', users.checkAvatar);
   app.get('/signout', users.signout);
 
-    // Setting up the users api
+   // Setting up the users api
   app.post('/users', users.create);
   app.post('/users/avatars', users.avatars);
 
@@ -22,7 +22,7 @@ module.exports = function(app, passport, auth) {
     failureFlash: 'Invalid email or password.'
   }), users.session);
 
-   // login endpoint
+  //  // login endpoint
   app.post('/api/auth/signin', users.login);
 
   app.get('/users/me', users.me);
