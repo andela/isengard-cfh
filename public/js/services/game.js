@@ -67,7 +67,6 @@ angular.module('mean.system')
   });
 
   socket.on('gameUpdate', function(data) {
-
     // Update gameID field only if it changed.
     // That way, we don't trigger the $scope.$watch too often
     if (game.gameID !== data.gameID) {
@@ -172,6 +171,7 @@ angular.module('mean.system')
       game.time = 0;
     }
   });
+  // Ends here
 
   socket.on('notification', function(data) {
     addToNotificationQueue(data.notification);

@@ -2,6 +2,15 @@ angular.module('mean.system')
 .controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', '$http', '$window', function ($scope, Global, $location, socket, game, AvatarService, $http, $window) {
   $scope.global = Global;
 
+  $(document).ready(($) => {
+    $('.modal').modal();
+    $('.button-collapse').sideNav();
+    $('.parallax').parallax();
+
+    $('nav').css('background-color', 'transparent');
+    $('#nav-divider').css('background-color', 'rgba(255,187,10,1)');
+  });
+
   $scope.playAsGuest = function () {
     game.joinGame();
     $location.path('/app');
@@ -41,7 +50,7 @@ angular.module('mean.system')
     $http.post('/api/auth/signup', JSON.stringify($scope.formData))
      .success(function (data) {
        if (data.status === true) {
-         $window.localStorage.setItem('token', JSON.stringify(data.token));
+         $window.localStorage.setItem('token', data.token);
          $window.location.href = '/';
        }
      });
@@ -70,6 +79,19 @@ angular.module('mean.system')
     }).error(function (error) {
     });
   };
+  $scope.leaderboard = function () {
+    var token = $window.localStorage.getItem('token');
+    var config = { headers: {
+      Authorization: 'Bearer ' + token,
+      Accept: 'application/json;odata=verbose',
+      'X-Testing': 'testing'
+    }
+  };
+    $http.get('/api/auth/leaderboard', config).success(function (data) {
+      $scope.winners = data.users;
+    });
+
+  }
   $scope.selectAvatar = function(event, avatarIndex) {
     const selectedAvatar = event.currentTarget;
     $('.avatars').removeClass('avatar-selected');
