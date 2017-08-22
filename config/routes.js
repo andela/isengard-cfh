@@ -95,6 +95,17 @@ module.exports = function(app, passport, auth) {
   app.get('/play', index.play);
   app.get('/', index.render);
   app.get('/api/auth/play', index.play);
+
+  // Route for the leaderboard
+  var board = require('../app/controllers/leaderBoard');
+  app.get('/api/auth/leaderboard', board.leaderBoard);
+
+  // Route for Game History
+  var game = require('../app/controllers/gameHistory');
+  app.get('/api/auth/history', game.gameHistory);
+
+// Route to get donations
+  app.get('/api/auth/donations', users.getDonations);
     // Game routes
   var game = require('../app/controllers/game');
   app.post('/api/games/:id/start', game.startGame);
