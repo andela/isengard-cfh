@@ -1101,3 +1101,45 @@ body {
 .gradientButton .donateNow {
   border-top: 0px solid black !important;
 }
+
+.member-area {
+  overflow: scroll;
+  height: 15cm;
+  /*display: block;*/
+  position: relative;
+  top: 0;
+  left: 0;
+
+}
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  height: 40%;
+}
+.chat-board, .chat-text-box {
+  background-color: transparent;
+  width: 100%;
+  height: 60%;
+  opacity: 1;
+}
+.chat-text-box {
+  height: 20%;
+}
+.chat-text-box > textarea {
+  height: 100%;
+  color: white;
+  outline: none;
+}
+.chat-header {
+  background-color: orangered;
+  height: 15%;
+  width: 100%;
+  cursor: pointer;
+  text-align: center;
+}
+.chat-board, .chat-text-box, .chat-header {
+  border-color: white;
+  border-style: solid;
+  border-width: thin;
+}

@@ -76,4 +76,15 @@ angular.module('mean.directives', [])
         }
       }
     };
+  }).directive('chat', function() {
+    return {
+      restrict: 'EA',
+      templateUrl: '/views/chat.html',
+      link(scope, elem, attr) {
+        scope.isHidden = false;
+        scope.hideChat = function() {
+          scope.isHidden = !scope.isHidden;
+        };
+      }
+    };
   });

@@ -2,6 +2,16 @@ angular.module('mean.system')
 .controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', '$http', '$window', function ($scope, Global, $location, socket, game, AvatarService, $http, $window) {
   $scope.global = Global;
 
+  $(document).ready(($) => {
+    $('.modal').modal();
+    $('.button-collapse').sideNav();
+    $('.parallax').parallax();
+    $('select').material_select();
+
+    $('nav').css('background-color', 'transparent');
+    $('#nav-divider').css('background-color', 'rgba(255,187,10,1)');
+  });
+
   $scope.playAsGuest = function () {
     game.joinGame();
     $location.path('/app');
