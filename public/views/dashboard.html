@@ -7,78 +7,75 @@
             <div class="nav-wrapper dashboard-nav"></div>
         </nav>
   <div ng-controller="IndexController">
-  <div class="center heading">Welcome, Peter to your dashboard</div>
+  <div class="center heading">Welcome to your dashboard</div>
   <div class="align-center">
       <div>
-  <div><a class="waves-effect waves-light btn modal-trigger" ng-click="leaderboard()" href="#modal1">View Leaderboard</a>
-  <a class="waves-effect waves-light btn modal-trigger" href="#modal2">View Game history</a>
-  <a class="waves-effect waves-light btn modal-trigger" href="#modal3">View Donation</a>
+  <div><button class="waves-effect waves-light btn modal-trigger deep-orange accent-3" ng-click="leaderboard()" data-target="modal1">View Leaderboard</button>
+  <button class="waves-effect waves-light btn modal-trigger deep-orange accent-3" ng-click="gameHistory()" data-target="modal2">View Game history</button>
+  <button class="waves-effect waves-light btn modal-trigger deep-orange accent-3" ng-click="donations()" data-target="modal3">View Donation</button>
       </div>
-<!--Leaderboard modal-->
+
+<div>
  <div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
       <h4>Leaderboard</h4>
-      <table>
+      <table ng-hide="!(gameWinners.length > 0)">
         <thead>
           <tr>
-              <th>Rank Position</th>
+              <th>Index</th>
               <th>Name Of Player</th>
               <th>Number of Wins</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="winner in winners">
-            <td>{{winner.id}}</td>
+          <tr ng-repeat="winner in gameWinners">
+            <td>{{winner.index}}</td>
             <td>{{winner.name}}</td>
             <td>{{winner.wins}} times</td>
           </tr>
         </tbody>
       </table>
+      <div ng-if="!(gameWinners.length > 0)">
+      <p>Apparently no game has been won by a player in this platform, you can start a game now and break the record to 
+        be the first gane winner!</p>
+     </div>
     </div>
     <div class="modal-footer">
-      <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+      <button class="modal-action modal-close waves-effect waves-green btn-flat ">Close</button>
     </div>
   </div>
+</div>
+<div>
 
 <!--Game History modal-->
   <div id="modal2" class="modal modal-fixed-footer">
     <div class="modal-content">
       <h4>Game History</h4>
-      <table>
+      <table ng-hide="!(games.length > 0)">
         <thead>
           <tr>
+              <th>Index</th>
               <th>Game Starter</th>
-              <th>Number of Rounds</th>
               <th>Game Winner</th>
               <th>Players</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr>
-            <td>James</td>
-            <td>2</td>
-            <td>Paul</td>
-            <td>James, Paul, Adams</td>
-          </tr>
-          <tr>
-            <td>James</td>
-            <td>2</td>
-            <td>Paul</td>
-            <td>James, Paul, Adams</td>
-          </tr>
-          <tr>
-           <tr>
-            <td>James</td>
-            <td>2</td>
-            <td>Paul</td>
-            <td>James, Paul, Adams</td>
+          <tr ng-repeat="game in games">
+            <td>{{game.index}}</td>
+            <td>{{game.gameCreator}}</td>
+            <td>{{game.gameWinner}}</td>
+            <td>{{game.players}}</td>
           </tr>
         </tbody>
       </table>
+      <div ng-if="!(games.length > 0)">
+      <p>You have not played any games yet. Have some fun by starting and playing a game now!</p>
+     </div>
     </div>
     <div class="modal-footer">
-      <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+      <button class="modal-action modal-close waves-effect waves-green btn-flat ">Close</button>
     </div>
   </div>
 
@@ -86,32 +83,14 @@
   <div id="modal3" class="modal modal-fixed-footer">
     <div class="modal-content">
       <h4>Records of Donations</h4>
-      <table>
-        <thead>
-          <tr>
-              <th>Premium Donor</th>
-              <th>Number of times</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>xxxxxxx</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td>yyyyyy</td>
-            <td>2</td>
-          </tr>
-          <tr>
-           <tr>
-            <td>kkkkk</td>
-            <td>2</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <div ng-if="status === 'failed'">
+          <p>{{message}}</p>
+      </div>
+      <div ng-if="status === 'success'">
+          <p>You have made {{count}} donations to charity</p>
+      </div>
     <div class="modal-footer">
-      <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+      <button class="modal-action modal-close waves-effect waves-green btn-flat ">Close</button>
     </div>
   </div>
 </div>

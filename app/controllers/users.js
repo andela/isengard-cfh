@@ -4,7 +4,8 @@
 var mongoose = require('mongoose'),
   jwt = require('jsonwebtoken'),
   bcrypt = require('bcryptjs'),
-  User = mongoose.model('User');
+  User = mongoose.model('User'),
+  Game = mongoose.model('Game');
 var avatars = require('./avatars').all();
 var config = require('../../config/config');
 var env = require('dotenv').config();
@@ -107,8 +108,8 @@ exports.create = function (req, res, next) {
           }
           req.logIn(user, function (err) {
             if (err) return next(err);
-            var userDetails = { email: user.email, password: user.password };
-            var token = jwt.sign(userDetails, config.secret, {
+            // var userDetails = { email: user.email, password: user.password };
+            var token = jwt.sign(user, config.secret, {
               expiresIn: 60 * 60 * 24  // token expires in 24 hours
             });
             res.json({
@@ -135,6 +136,7 @@ exports.login = function (req, res, next) {
   User.findOne({
     email: req.body.email
   }).exec(function (error, user) {
+    console.log(user);
     if (error) throw error;
     if (!user) {
       return res.json({
@@ -177,6 +179,29 @@ exports.getDonation = function (req, res) {
     });
   }
 };
+
+exports.getDonations = function (req, res) {
+  const headerBearer = req.headers.authorization;
+  const token = headerBearer.split(' ')[1];
+  if (token) {
+    jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
+      if (err) {
+        res.json({ status: false,
+          message: 'Authentication failed' });
+      }
+      User.findOne({ email: decoded._doc.email })
+      .exec(function(error, user) {
+        if (error) throw error;
+        if (!(user.donations.length > 0)) {
+          res.json({ status: 'failed', message: 'You have made no donations yet. Plegde your support today and do some charity.' });
+        } else {
+          res.json({ status: 'success', count: user.donations.length });
+        }
+      });
+    });
+  }
+};
+
 
 /**
  * Assign avatar to user
@@ -256,18 +281,3 @@ exports.getDonation = function (req, res) {
     });
   };
 
-  exports.leaderBoard = function (req, res) {
-    var headerBearer = req.headers.authorization;
-    var token = headerBearer.split(' ')[1];
-    if (token) {
-      jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
-        if (err) {
-          res.json({ status: false,
-            message: 'Authentication failed' });
-        }
-        const users = [{ id: 1, name: 'PAUL', wins: 6 }, { id: 3, name: 'PETER', wins: 4 }];
-        res.json({ status: 'success',
-          users });
-      });
-    }
-  };
