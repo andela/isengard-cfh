@@ -22,7 +22,14 @@ exports.signin = function (req, res) {
   if (!req.user) {
     res.redirect('/#!/signin?error=invalid');
   } else {
-    res.redirect('/#!/app');
+    const token = jwt.sign(req.user, config.secret, {
+      expiresIn: 60 * 60 * 24
+    });
+    res.json({
+      success: true,
+      token
+    });
+    // res.redirect('/#!/app');
   }
 };
 
@@ -80,7 +87,7 @@ exports.checkAvatar = function (req, res) {
 /*
  * Create user
  */
-exports.create = function (req, res) {
+exports.create = function (req, res, next) {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email

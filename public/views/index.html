@@ -1,17 +1,74 @@
-<script type="text/javascript">
-$(document).ready(function() {
+<div landing ng-controller="IndexController">
+  <div class="row block">
+    <div class="navbar-fixed">
+      <nav class="" role="navigation"> 
+        <div class="nav-wrapper">
+          <a id="logo-container" href="#" class="logo-text brand-logo deep-orange-text accent-3">Cards for Humanity</a>
+          <ul class="right hide-on-med-and-down white-text">
+            <li><a onClick="scroll(0,0);">Home</a></li>
+            <li><a onClick="scroll(0,1100);">How to play</a></li>
+            <li><a onClick="scroll(0,1750);">Charity</a></li>
+            <li><a onClick="scroll(0,2200);">About Us</a></li>
+            <span ng-show="showOptions">
+              <li><button data-target="sign-up" class="btn btn-flat white-text modal-trigger btn-menu">Sign Up</button></li>
+              <li><button data-target="log-in" class="btn btn-flat white-text modal-trigger btn-menu">Sign In</button></li>
+            </span>
+            <span ng-hide="showOptions">
+              <li><a ng-click="logout()" method="get">Sign Out</a></li>
+            </span>
+            <li><a href="https://www.crowdrise.com/donate/project/cfhio/cards4humanity/?widget=true" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
+          </ul>
 
-  var ChroMo = '(Chrome)/(\d+)\.(\d+)\.(\d+)\.(\d+) Mobile';
+          <ul id="nav-mobile" class="side-nav">
+            <li><aonClick="scroll(0,0);">Home</a></li>
+            <li><a onClick="scroll(0,1400);">How to play</a></li>
+            <li><a onClick="scroll(0,2450);">Charity</a></li>
+            <li><a onClick="scroll(0,3000);">About Us</a></li>
+            <span ng-show="showOptions">
+              <li><button data-target="sign-up" class="btn btn-flat black-text modal-trigger btn-menu">Sign Up</button></li>
+              <li><button data-target="log-in" class="btn btn-flat black-text modal-trigger btn-menu">Sign In</button></li>
+            </span>
+            <span ng-hide="showOptions">
+              <li><a ng-click="logout()" class="btn-menu" method="get">Sign Out</a></li>
+            </span>
+            <li><a href="https://www.crowdrise.com/donate/project/cfhio/cards4humanity/?widget=true" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
+          </ul>
+          <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+      <div id="nav-divider" class="divider"></div>      
+      </nav>
+    </div>
 
-  if (/Android|webOS|CriOs|ChroMo|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false && location.href !== "http://localhost:3000/#!/app") {
-    $('body').append('<a href="http://hackreactor.com"><img style="z-index: 10000; position: absolute; top: 0; right: 0; width: 125px; height: 125px; border: 0;" src="http://i.imgur.com/x86kKmF.png" alt="Built at Hack Reactor"></a>');
-  }
+    <div id="blue" class='block valign-wrapper'>
+      <br><br>
+      <br><br>
 
-  //Twitter buttons
-  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+      <div class="landing container">
+        <div class="header-text row col m12 s12 white-text">
+          <h1 class="header center-align">CARDS <span class="amber-text">for</span> HUMANITY</h1>
+        </div>
+        <div class="row col m12 s12 white-text">
+          <h5 class="flow-text center-align valign light">A Game for Wistful People Desperately Trying to do Good</h5>
+        </div>
+        <br><br>
+        <br><br>
+        <br><br>
+        <br><br>
+        <div id="btn-align" class="row col m12 s12 center-align">
+          <span ng-show="showOptions">
+            <a href="/play" id="download-button" class="btn-large a waves-effect waves-light deep-orange accent-3">Play as Guest</a>
+            <button data-target="log-in" class="btn-large waves-effect waves-light deep-orange accent-3 modal-trigger btn-menu">Play with Friends</button>
+          </span>
+          <span ng-hide="showOptions">
+            <a href="/play" id="download-button" class="btn-large a waves-effect waves-light deep-orange accent-3">Play with Strangers</a>
+            <a href="" ng-click="playGame()" id="download-button" class="btn-large a waves-effect waves-light deep-orange accent-3">Play with Friends</a>
+          </span>
+        </div>
+        <br><br>
 
-  });
-</script>
+      </div> 
+    </div>
+  </div>
 
 <script></script>
 <div landing id="main-bod">
@@ -44,45 +101,54 @@ $(document).ready(function() {
             </div>
           </div>
         </div>
+  <!-- What is Cards for Humantiy -->
+  <div class="row">
+    <div class="col s12 m12">
+      <div class="info-block">
+        <h3 class="center amber-text">What is Cards for Humanity?</h3>
+        <p class="flow-text center light">Cards for Humanity is a fast-paced online version of the popular card game, <a href="https://cardsagainsthumanity.com/" class="amber-text">Cards Against Humanity</a>, that gives you the opportunity to donate to children in need - all while remaining as despicable and awkward as you naturally are.<br>
+        <span class="amber-text">Warning!</span> This game contains offensive, profane, explicit content created by Cards Against Humanity and provided here, uncensored and complete, in digital form. Human Resources made us say that.</p>
       </div>
     </div>
   </div>
-<!-- Fixed Logo & Menu Bar End -->
 
-<!-- Landing Start -->
-  <div class="wpb-teaser parallax-background" id="homer">
-    <div class="background-opacity"></div>
-    <div class="container">
-      <div class="row" id="main-text">
-        <div class="col-md-12" id="avatars" ng-controller="IndexController">
-          <img ng-repeat="avatar in avatars" ng-src="{{avatar}}" id="avatar-face">
-        </div>
-        <!-- Teaser Slogan Start -->
-        <div class="wpb-slogan">
-          <h2>A Game for Horrible People <span id="third-word">Desperately</span> Trying to do Good</h2>
-        </div>
-        <!-- Teaser Slogan End -->
-
-      <!-- Teaser Text Start -->
-      <div class="wpb-text">
-        <h3 id="slogan">What is Cards for Humanity?</h3>
-        <p>
-          Cards for Humanity is a fast-paced online version of the popular card game, <a href="http://cardsagainsthumanity.com/" target="_blank">Cards Against Humanity</a>, that gives you the opportunity to donate to children in need - all while remaining as despicable and awkward as you naturally are.
-        </p>
-        <p>
-          <span id="warning-word">Warning!</span>  This game contains offensive, profane, explicit content created by <a href="http://cardsagainsthumanity.com/" target="_blank">Cards Against Humanity</a> and provided here, uncensored and complete, in digital form. Human Resources made us say that.
-        </p>
-      </div>
-      <!-- Teaser Text End -->
-      <span id='send-link' ng-show="showOptions"> *To send a private link to your friends, sign up! </span>
-      <div id="sign-up">
-        <span ng-show="showOptions">
-        <a href="#!/signup"><div id="sign-up-btn-landing">Sign Up</div></a>
-          <div id="sign-up-text"><a href="/play">
-            <span id="first-word">or Play</span>
-            <span id="second-word">as</span>
-            <span id="third-word">Guest</span></a>
+  <!-- How to play -->
+  <div class="white valign-wrapper">
+  <div class="container col s12 m10 offset-m1">
+    <div class="row">
+      <h3 class="center amber-text">How to play</h3>
+    </div>
+    <div class="row center">
+      <div class="col s12 m5 offset-m1">
+        <div class="card light-background">
+          <div class="card-content white-text">
+            <span class="head card-title">Step 1</span>
+            <div class="card-title-divider a divider amber"></div>
+            <div class="card-title-divider a divider amber"></div>
+            <div class="card-title-divider divider transparent"></div>
+            <div class="card-title-divider divider transparent"></div>
+            <div class="card-title-divider b divider amber"></div>
+            <div class="card-title-divider b divider amber"></div>
+            <br>
+            <p>Each player begins with, and will always have, 10 white answer cards.</p>
           </div>
+        </div>
+      </div>
+
+      <div class="col s12 m5">
+        <div class="card">
+          <div class="card-content white-text">
+            <span class="head card-title">Step 2</span>
+            <div class="card-title-divider c divider amber"></div>
+            <div class="card-title-divider c divider amber"></div>
+            <div class="card-title-divider divider transparent"></div>
+            <div class="card-title-divider divider transparent"></div>
+            <div class="card-title-divider d divider amber"></div>
+            <div class="card-title-divider d divider amber"></div>
+            <br>
+            <p>For each round, one player is randomly chosen as the Card Czar.</p>
+          </div>
+<<<<<<< HEAD
           <span id="tweet-container-index">
             <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>
             <a href="https://twitter.com/cfh_app" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @cfh_app</a>
@@ -121,137 +187,190 @@ $(document).ready(function() {
               </span>
         </span>
        </div>
+        </div>
+      </div>
+    </div>
+    <div class="row center">
+      <div class="col s12 m5  offset-m1">
+        <div class="card">
+          <div class="card-content white-text">
+            <span class="head card-title">Step 3</span>
+            <div class="card-title-divider c divider amber"></div>
+            <div class="card-title-divider c divider amber"></div>
+            <div class="card-title-divider divider transparent"></div>
+            <div class="card-title-divider divider transparent"></div>
+            <div class="card-title-divider d divider amber"></div>
+            <div class="card-title-divider d divider amber"></div>
+            <br>
+            <p>Everyone else answers the black question card by clicking on the answer card they want to use.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m5">
+        <div class="card light-background">
+          <div class="card-content white-text">
+            <span class="head card-title">Step 4</span>
+            <div class="card-title-divider a divider amber"></div>
+            <div class="card-title-divider a divider amber"></div>
+            <div class="card-title-divider divider transparent"></div>
+            <div class="card-title-divider divider transparent"></div>
+            <div class="card-title-divider b divider amber"></div>
+            <div class="card-title-divider b divider amber"></div>
+            <br>
+            <p>The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-<!-- Landing End -->
+  </div>
 
 
-<!-- How to Play Start -->
-<section id="how-to">
-  <div class="wpb-teaser parallax-background" id="how-to-play">
-    <div class="background-opacity"></div>
-
-    <div class="container" id="how-to-container">
-      <div class="row" id="main-text">
-
-        <!-- Teaser Slogan Start -->
-        <div id="slogan-head">
-          <div class="span6 wpb-slogan">
-            <h2>How to Play</h2>
-          </div>
-        </div>
-        <!-- Teaser Slogan End -->
-
-        <!-- Teaser Text Start -->
-        <div id="card-list">
-          <div id="how-to-cards">
-            <div class="landing-card how-to">Each player begins with, and will always have, 10 white answer cards.</div>
-            <div class="landing-card how-to">For each round, one player is randomly chosen as the Card Czar.</div>
-            <div class="landing-card how-to">Everyone else answers the black question card by clicking on the answer card they want to use.</div>
-            <div class="landing-card how-to">The Card Czar then picks a favorite answer, and whoever played that answer wins the round.</div>
-          </div>
-        </div>
-       <!-- Teaser Text End -->
+  <div class="parallax-container">
+    
+    <div class="container">
+      <div class="row center">
+        <h3 class="header center amber-text">Charity</h3>
+        <p class="flow-text col s12 light">"If you don't give back, no one will like you™" - <a href="https://www.crowdrise.com/cfhio/fundraiser/cards4humanity" class="amber-text">crowdrise.com</a></p>
       </div>
-
-      <div id="sign-up">
-        <span ng-show="showOptions">
-          <a href="#!/signup"><div id="sign-up-btn-landing">Sign Up</div></a>
-          <div id="sign-up-text"><a href="/play">
-            <span id="first-word">or Play</span>
-            <span id="second-word">as</span>
-            <span id="third-word">Guest</span></a>
-          </div>
-        </span>
-
-        <span ng-hide="showOptions">
-          <a href="#!/app"><div id="sign-up-btn-landing">Join Game</div></a>
-        </span>
-       </div>
+      <div class="row center">
+        <p class="flow-text charity light">
+          We're quite sure you feel the same way, so we've integrated donation widgets (via crowdrise.com), along with some not-so-subtle reminders throughout the game to give you the opportunity to donate. If you're signed in when you donate, we'll even upgrade your account and place a crown on your avatar's head (to remind other players how much better you are than them).
+          All donations go to the Make-a-Wish Foundation and benefit children in need.
+        </p>
+      </div>
+    <div class="makeawish row"><img class="col m5 push-m7 s6 push-s6" src="/img/makeawish.png" alt="make a wish logo"></div>      
     </div>
-</section>
-<!-- How to Play End -->
-
-<!-- Donation Info Start -->
-<section class="wpb-contact-us parallax-background-contact" id="donations">
-   <div class="wpb-teaser parallax-background" id="about-team">
-    <div class="background-opacity"></div>
-
-    <div class="container" id="how-to-container">
-      <div class="row" id="main-text">
-
-        <!-- Teaser Slogan Start -->
-        <div id="slogan-head">
-          <div class="span6 wpb-slogan">
-            <h2>Charity</h2>
-            <h4 id="give">"If you don't give back, no one will like you&trade;" - <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity">crowdrise.com</a></h4>
-          </div>
-        </div>
+    <!-- </div> -->
+    <div class="parallax"><img class="responsive-img" src="img/phil-coffman-161251.jpg" alt="charity section"><div id="overlay"></div></div>  
+  </div>
+  
+  <div class="parallax-container2">
+    
+    <div class="paralax container">
+      <div class="row center">
+        <h3 class="header center amber-text">Charity</h3>
+        <p class="flow-text col s12 light">"If you don't give back, no one will like you™" - <a href="https://www.crowdrise.com/cfhio/fundraiser/cards4humanity" class="amber-text">crowdrise.com</a></p>
       </div>
-      <div id="info-box">
-        <div id="landing-image">
-          <div id="landing-charity">
-            <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" id="crowdriseStaticLink-fundraiser-121142" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a>
-            <script type="text/javascript" src="https://www.crowdrise.com/widgets/donate/fundraiser/121142/?callback=userDonationCb"></script>
-          </div>
+      <div class="row center">
+        <p class="flow-text charity light">
+          We're quite sure you feel the same way, so we've integrated donation widgets (via crowdrise.com), along with some not-so-subtle reminders throughout the game to give you the opportunity to donate. If you're signed in when you donate, we'll even upgrade your account and place a crown on your avatar's head (to remind other players how much better you are than them).
+          All donations go to the Make-a-Wish Foundation and benefit children in need.
+        </p>
+      </div>
+    <div class="makeawish row"><img class="col m5 push-m7 s7 push-s5" src="img/makeawish.png" alt="make a wish logo"></div>      
+    </div>
+    
+  </div>
+
+  <div class="container">
+    <div class="section">
+
+      <div class="row">
+        <div class="col s12 center">
+          <h3><i class="mdi-content-send black-text"></i></h3>
+          <h4 class="amber-text">Cards for Humanity was:</h4>
+          <p class="flow-text light">Originally created by: <span class="light-blue-text accent-4">Matt Silverstein</span>, <span class="light-blue-text accent-4">Will Ngo</span>, <span class="light-blue-text accent-4">Tyler McGinnis</span>, and <span class="light-blue-text accent-4">David Gonzalez</span></p>
+          <p class="flow-text light">And redesigned with love and tenderness by: <span class="light-blue-text accent-4">Oluwatomi Akande</span>, <span class="light-blue-text accent-4">Ayodele Victor</span>, <span class="light-blue-text accent-4">Terungwa Kombol</span>, <span class="light-blue-text accent-4">Onyekachi Samuel</span>, <span class="light-blue-text accent-4">Emeka Okoro</span>, <span class="light-blue-text accent-4">Victor Idongesit</span> and <span class="light-blue-text accent-4">Olufemi Adetunji</span></p>
         </div>
-        <div class="some-text">
-            We're quite sure you feel the same way, so we've integrated donation widgets (via <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity">crowdrise.com</a>), along with some not-so-subtle reminders throughout the game to give you the opportunity to donate. If you're signed in when you donate, we'll even upgrade your account and place a crown on your avatar's head (to remind other players how much better you are than them).</p>
-            <p>
-            All donations go to the Make-a-Wish Foundation and benefit children in need.
-            </p>
-            <a href="http://www.wish.org"><img src="img/make-a-wish-logo-white-large.png" id="wish"/></a>
-          </div>
       </div>
     </div>
+   
   </div>
-</section>
-<!-- Donation Info End -->
 
-<!-- About Us Start -->
-<section class="wpb-contact-us parallax-background-contact" id="team">
-   <div class="wpb-teaser parallax-background" id="about-team">
-    <div class="background-opacity"></div>
+  <footer class="page-footer">
+    <div class="footer-content">
+      <div class="row">
+        <div class="col l4 m4 s12">
+          <p class="flow-text white-text"><span class="amber-text">Warning:</span> This game is based on the <a href="https://cardsagainsthumanity.com/" class="amber-text">Cards Against Humanity</a> card game, which is CC licensed (BY-NC-SA). Cards for Humanity is not affiliated with Cards Against Humanity. In complying with the Creative Commons license of the Cards Against Humanity card game, all proceeds from donations go directly to charity, as managed by <a href="https://www.crowdrise.com/cfhio/fundraiser/cards4humanity" class="amber-text">crowdrise.</a></p>
 
-    <div class="container" id="how-to-container">
-      <div class="row" id="main-text">
+        </div>
 
-        <!-- Teaser Slogan Start -->
-        <div id="slogan-head">
-          <div class="span6 wpb-slogan">
-            <h2>The Team</h2>
-          </div>
+        <div class="col m4 offset-m4 s12 right-align">
+          <h5 class="white-text light">View on: <i class="fa fa-github" aria-hidden="true"></i></h5>
+          <ul>
+            <li><p>Cards for Humanity</p></li>
+            <li><p>&copy 2017</p></li>
+          </ul>
         </div>
       </div>
-      <div class="wpb-team-details" id="team-names">
-        <h3>Created with love and tenderness by:<br>
-          <a href="http://github.com/silversteez">Matt Silverstein,</a>
-          <a href="http://github.com/mrngoitall">Will Ngo,</a>
-          <a href="http://github.com/tylermcginnis33">Tyler McGinnis,</a> and
-          <a href="http://github.com/davegonzalez">David Gonzalez</a></h3>
-          <h3>XOXO</h3>
+    </div>
+    <div class="footer-copyright footer-content center-align">
+      <div class="row">
+        <p class="">By: <span class="amber-text">Isengard-Team</span> | <span class="amber-text">Andela, Nigeria</span></p>
       </div>
-      <img src="img/group-shot.jpg" alt="Team Member" id="team-photo">
+    </div>
+  </footer>
+
+  <!-- Modal Structure -->
+  <div id="sign-up" class="modal" ng-controller="IndexController">
+    <div class="modal-content">
+      <div class = "modal-header-flex">
+        <h4>Create Account @ CFH</h4>
+        <div class="signup-alt">
+          <span>Sign up with</span>
+          <a href="/auth/facebook"><i class="fa fa-facebook"></i></a>
+          <a href="/auth/twitter"><i class="fa fa-twitter"></i></a>
+          <a href="/auth/google"><i class="fa fa-google-plus"></i></a>
+          <a href="/auth/github"><i class="fa fa-github"></i></a>
+        </div>
+      </div>
+      <hr>
+      <div class="form">
+        <div class="input-field">
+          <input class="input-info" id="name" ng-model="formData.name" type="text" name="name" placeholder="Tomi Akande" required novalidate />
+          <label for="name">Full Name</label>
+        </div>
+        <div class="input-field">
+          <input class="input-info" id="email" ng-model="formData.email" type="email" name="email" placeholder="oluwatomi.akande@andela.com" required novalidate />
+          <label for="email">Email</label>
+        </div>
+        <div class="input-field">
+          <input class="input-info" id="password" ng-model="formData.password"  type="password" name="password" placeholder="******" required novalidate />
+          <label for="password">Password</label>
+        </div>
+        <div class="input-field">
+          <span> Select Avatar </span>
+        </div>
+        <div class='display-avatar' ng-controller="IndexController">
+          <span ng-repeat="avatar in avatars" class="avatars ng-scope" ng-click="selectAvatar($event, $index)">
+            <img ng-src="{{avatar}}"></img>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="signup()">Sign Up</a>
     </div>
   </div>
-</section>
-<!-- About Us End -->
 
-<!-- Footer Start -->
-<section class="foot">
-  <div><small class="legal">Legal stuff: This game is based on the <a href="http://cardsagainsthumanity.com">Cards Against Humanity</a> card game, which is CC licensed (BY-NC-SA). Cards for Humanity is not affiliated with Cards Against Humanity. In complying with the Creative Commons license of the Cards Against Humanity card game, all proceeds from donations go directly to charity, as managed by <a href="http://crowdrise.com">crowdrise</a>.</small></div>
-  <div class="wpb-bottom-bar">
-    <div class="text-left">
-        <a href="https://github.com/cardsforhumanity/cardsforhumanity"><img src="img/github.png" id="gitcat"></a>
-        <a href="/#!/privacy">Privacy Policy</a>
-        <div class="floater" id="landing-logo">
-          <span id="first-word">Cards</span>
-          <span id="second-word"> for</span>
-          <span id="third-word">Humanity</span>
+  <div id="log-in" class="modal">
+    <div class="modal-content">
+      <div class = "modal-header-flex">
+        <h4>Login to CFH</h4>
+        <div class="signup-alt">
+          <span>Log in with</span>
+          <a href="/auth/facebook"><i class="fa fa-facebook"></i></a>
+          <a href="/auth/twitter"><i class="fa fa-twitter"></i></a>
+          <a href="/auth/google"><i class="fa fa-google-plus"></i></a>
+          <a href="/auth/github"><i class="fa fa-github"></i></a>
         </div>
       </div>
+      <hr>
+      <div class='form'>
+        <div class="input-field">
+          <input class="input-info" id="email" ng-model="formData.email" type="email" name="email" placeholder="oluwatomi.akande@andela.com" required novalidate />
+          <label for="email">Email</label>
+        </div>
+        <div class="input-field">
+          <input class="input-info" id="password" ng-model="formData.password"  type="password" name="password" placeholder="******" required novalidate />
+          <label for="password">Password</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="signin()">Log In</a>
+    </div>
   </div>
-</section>
-<!-- Footer End -->
 </div>
