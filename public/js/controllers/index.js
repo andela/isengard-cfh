@@ -1,10 +1,7 @@
 angular.module('mean.system')
-.controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', function ($scope, Global, $location, socket, game, AvatarService) {
-    $scope.global = Global;
+.controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', '$http', '$window', function ($scope, Global, $location, socket, game, AvatarService, $http, $window) {
+  $scope.global = Global;
 
-    $scope.playAsGuest = function() {
-      game.joinGame();
-      $location.path('/app');
   $(document).ready(function() {
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
@@ -71,26 +68,20 @@ angular.module('mean.system')
       Accept: 'application/json;odata=verbose',
       'X-Testing': 'testing'
     }
->>>>>>> staging
     };
-
-    $scope.showError = function() {
-      if ($location.search().error) {
-        return $location.search().error;
-      } else {
-        return false;
+    $http.get('/api/auth/play?custom', config)
+    .success(function (data) {
+      if (data.status === true) {
+        $window.location.href = '/#!/app?custom';
       }
-<<<<<<< HEAD
-    };
-
-    $scope.avatars = [];
-    AvatarService.getAvatars()
-      .then(function(data) {
-        $scope.avatars = data;
-      });
-
-}]);
-=======
+    });
+  };
+  $scope.logout = function () {
+    $window.localStorage.removeItem('token');
+    $http.get('/signout').success(function (data) {
+      if (data.status === true) {
+        $window.location.href = '/';
+      }
     }).error(function (error) {
     });
   };
@@ -108,4 +99,3 @@ angular.module('mean.system')
     $scope.avatars = data;
   });
 }]);
->>>>>>> staging
