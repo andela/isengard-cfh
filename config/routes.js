@@ -8,64 +8,67 @@ module.exports = function(app, passport, auth) {
   app.get('/chooseavatars', users.checkAvatar);
   app.get('/signout', users.signout);
 
-    //Setting up the users api
-    app.post('/users', users.create);
-    app.post('/users/avatars', users.avatars);
+   // Setting up the users api
+  app.post('/users', users.create);
+  app.post('/users/avatars', users.avatars);
 
     // Donation Routes
-    app.post('/donations', users.addDonation);
+  app.post('/donations', users.addDonation);
 
-    app.post('/users/session', passport.authenticate('local', {
-        failureRedirect: '/signin',
-        failureFlash: 'Invalid email or password.'
-    }), users.session);
+  app.post('/users/session', passport.authenticate('local', {
+    failureRedirect: '/signin',
+    failureFlash: 'Invalid email or password.'
+  }), users.session);
 
-    app.get('/users/me', users.me);
-    app.get('/users/:userId', users.show);
+  //  // login endpoint
+  app.post('/api/auth/signin', users.login);
 
-    //Setting the facebook oauth routes
-    app.get('/auth/facebook', passport.authenticate('facebook', {
-        scope: ['email'],
-        failureRedirect: '/signin'
-    }), users.signin);
+  app.get('/users/me', users.me);
+  app.get('/users/:userId', users.show);
 
-    app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-        failureRedirect: '/signin'
-    }), users.authCallback);
+    // Setting the facebook oauth routes
+  app.get('/auth/facebook', passport.authenticate('facebook', {
+    scope: ['email'],
+    failureRedirect: '/signin'
+  }), users.signin);
 
-    //Setting the github oauth routes
-    app.get('/auth/github', passport.authenticate('github', {
-        failureRedirect: '/signin'
-    }), users.signin);
+  app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    failureRedirect: '/signin'
+  }), users.authCallback);
 
-    app.get('/auth/github/callback', passport.authenticate('github', {
-        failureRedirect: '/signin'
-    }), users.authCallback);
+    // Setting the github oauth routes
+  app.get('/auth/github', passport.authenticate('github', {
+    failureRedirect: '/signin'
+  }), users.signin);
 
-    //Setting the twitter oauth routes
-    app.get('/auth/twitter', passport.authenticate('twitter', {
-        failureRedirect: '/signin'
-    }), users.signin);
+  app.get('/auth/github/callback', passport.authenticate('github', {
+    failureRedirect: '/signin'
+  }), users.authCallback);
 
-    app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-        failureRedirect: '/signin'
-    }), users.authCallback);
+    // Setting the twitter oauth routes
+  app.get('/auth/twitter', passport.authenticate('twitter', {
+    failureRedirect: '/signin'
+  }), users.signin);
 
-    //Setting the google oauth routes
-    app.get('/auth/google', passport.authenticate('google', {
-        failureRedirect: '/signin',
-        scope: [
-            'https://www.googleapis.com/auth/userinfo.profile',
-            'https://www.googleapis.com/auth/userinfo.email'
-        ]
-    }), users.signin);
+  app.get('/auth/twitter/callback', passport.authenticate('twitter', {
+    failureRedirect: '/signin'
+  }), users.authCallback);
 
-    app.get('/auth/google/callback', passport.authenticate('google', {
-        failureRedirect: '/signin'
-    }), users.authCallback);
+    // Setting the google oauth routes
+  app.get('/auth/google', passport.authenticate('google', {
+    failureRedirect: '/signin',
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email'
+    ]
+  }), users.signin);
 
-    //Finish with setting up the userId param
-    app.param('userId', users.user);
+  app.get('/auth/google/callback', passport.authenticate('google', {
+    failureRedirect: '/signin'
+  }), users.authCallback);
+
+    // Finish with setting up the userId param
+  app.param('userId', users.user);
 
     // Answer Routes
     var answers = require('../app/controllers/answers');
@@ -82,12 +85,27 @@ module.exports = function(app, passport, auth) {
     app.param('questionId', questions.question);
 
     // Avatar Routes
-    var avatars = require('../app/controllers/avatars');
-    app.get('/avatars', avatars.allJSON);
+  var avatars = require('../app/controllers/avatars');
+  app.get('/avatars', avatars.allJSON);
 
-    //Home route
-    var index = require('../app/controllers/index');
-    app.get('/play', index.play);
-    app.get('/', index.render);
+    // Home route
+  var index = require('../app/controllers/index');
+  app.get('/play', index.play);
+  app.get('/', index.render);
+  app.get('/api/auth/play', index.play);
 
+  // Route for the leaderboard
+  var board = require('../app/controllers/leaderBoard');
+  app.get('/api/auth/leaderboard', board.leaderBoard);
+
+  // Route for Game History
+  var game = require('../app/controllers/gameHistory');
+  app.get('/api/auth/history', game.gameHistory);
+
+// Route to get donations
+  app.get('/api/auth/donations', users.getDonations);
+    // Game routes
+  var game = require('../app/controllers/game');
+  app.post('/api/games/:id/start', game.startGame);
+  app.post('/api/games/:id/end', game.endGame);
 };
