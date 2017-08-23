@@ -73,30 +73,40 @@
   </div> -->
 
   <div class="row game-container">
-    <div class="row valign-wrapper">
+    <div class="row">
       <!-- Time Remaining -->
-      <div class="col s12 m2">
-        <timer></timer>
-      </div>
-      <!-- Questions  -->
-      <div class="col s12 m7">
-        <question></question>
+      <div class="col s12 m9">
+        <div class="col s12 m3">
+          <timer></timer>
+        </div>
+        <!-- Questions  -->
+        <div class="col s12 m9">
+          <question></question>
+        </div>
+        <div class="col s12 m12">
+          <div class="card-panel answers-panel">
+            <span class="white-text">
+              <answers></answers>              
+            </span>
+          </div>
+        </div>
       </div>
       <!-- Avatars  -->
       <div class="col s12 m3">
-        <div class="card-panel">
+        <div class=" card-panel member-area">
+          <memberbox></memberbox>
+          <chatbox></chatbox>
           <span class="white-text">
           </span>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col s12 m9">
+    <!--<div class="row">
         <div class="card-panel answers-panel">
           <span class="white-text">
           </span>
         </div>
-      </div>
+      </div>-->
     </div>
     
   </div>
