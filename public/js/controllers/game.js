@@ -162,7 +162,7 @@ angular.module('mean.system')
         return;
       }
       var region = { region: $scope.data.region };
-      $http.post('/region', JSON.stringify(region));
+      $http.post('/api/region', JSON.stringify(region));
       const guestModal = $('#region');
       guestModal.modal('close');
       $scope.startGame();

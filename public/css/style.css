@@ -399,3 +399,35 @@ h4 {
     margin-bottom: 0.6rem;
   }
 }
+
+/*STYLING FOR GAME LOG PAGE*/
+.dashboard-nav {
+  background-color: #030000;
+  margin: 0;
+}
+.row {
+  margin-bottom: 30px !important;
+}
+
+.align-center {
+  position: absolute;
+  top: 30%;
+  left: 25%;
+}
+.align-center a:link,
+.align-center a:visited
+ {
+  background-color: #ff3d00;
+}
+align-center a:hover,
+.align-center a:active
+ {
+  background-color: #551400;
+}
+.heading {
+  margin-top: 70px;
+  font-size: 30px;
+  color: #ffc107;
+  font-weight: 300;
+}
+
