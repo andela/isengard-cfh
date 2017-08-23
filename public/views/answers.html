@@ -67,10 +67,25 @@
       <!-- This is for testing -->
       <!-- <a href="http://www.crowdrise.com" id="crowdriseStaticLink-project-36715" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a> -->
       <!-- <script type="text/javascript" src="https://apisandbox.crowdrise.com/widgets/donate/project/36715/?callback=userDonationCb"></script> -->
+  </div>
+</div>
+  <!--<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>-->
 
-    </div> 
-</div> 
- <div id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+  <!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content czar-modal">
+      <div ng-click="flipCards()">
+        <img class="modal-action modal-close" src="../img/black-card-6.jpg" />
+      </div>
+  </div>
+</div>
+<!--<div class="czar-modal" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+  <div ng-click="flipCards()">
+    <img src="../img/black-card-6.jpg" class=""/>
+ </div>
+</div>-->
+
+<div id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
   <div id="czar-blank-inner">
     <span id="smaller-text">Players are choosing their answers. Prepare to select a winner.</span>
   </div>

@@ -37,7 +37,7 @@ function Game(gameID, io) {
   this.timeLimits = {
     stateChoosing: 21,
     stateJudging: 16,
-    stateResults: 5,
+    stateResults: 6,
     stateNextRound: 12,
     stateChangeCzar: 1
   };
