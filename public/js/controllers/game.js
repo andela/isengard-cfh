@@ -1,5 +1,5 @@
 angular.module('mean.system')
-.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
+.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', '$http', '$window', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog, $http, $window) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -122,13 +122,30 @@ angular.module('mean.system')
 
     $scope.startGame = function() {
       game.startGame();
+      var token = $window.localStorage.getItem('token');
+      var config = { headers: {
+          Authorization: 'Bearer ' + token,
+          Accept: 'application/json;odata=verbose',
+          'X-Testing': 'testing'
+        }
+      };
+      const playersIds = game.players.map((player, index) => {
+        return player.userID;
+      });
+      console.log(playersIds);
+      $http.post(`http://localhost:3000/api/games/${game.gameID}/start`, {
+        playersIds
+      }, config).then((res) => {
+        console.log('Game saved');
+      }, (err) => {
+        console.log(err);
+      });
     };
-
     $scope.abandonGame = function() {
       game.leaveGame();
       $location.path('/');
     };
-
+    
     // Catches changes to round to update when no players pick card
     // (because game.state remains the same)
     $scope.$watch('game.round', function() {
