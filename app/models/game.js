@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
  */
 const GameSchema = new Schema({
   id: {
-    type: Number
+    type: String
   },
   creatorId: {
     type: String,
