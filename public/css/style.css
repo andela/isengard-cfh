@@ -402,6 +402,7 @@ h4 {
   }
 }
 
+<<<<<<< HEAD
 /*STYLING FOR GAME LOG PAGE*/
 
 .dashboard-nav {
@@ -434,6 +435,8 @@ align-center a:hover,
   font-weight: 300;
 }
 
+=======
+>>>>>>> 8dab440fb1e5ca7547d6d610d4fe5dd3b74041b8
 /* Game Area */
 
 .block-gaming-area {
