@@ -1,6 +1,5 @@
 var async = require('async');
 
-
 module.exports = function(app, passport, auth) {
     // User Routes
   var users = require('../app/controllers/users');
@@ -13,7 +12,6 @@ module.exports = function(app, passport, auth) {
   app.post('/users', users.create);
   app.post('/users/avatars', users.avatars);
 
-  app.post('/api/auth/signup', users.create);
     // Donation Routes
   app.post('/donations', users.addDonation);
 
@@ -73,18 +71,18 @@ module.exports = function(app, passport, auth) {
   app.param('userId', users.user);
 
     // Answer Routes
-  var answers = require('../app/controllers/answers');
-  app.get('/answers', answers.all);
-  app.get('/answers/:answerId', answers.show);
+    var answers = require('../app/controllers/answers');
+    app.get('/answers', answers.all);
+    app.get('/answers/:answerId', answers.show);
     // Finish with setting up the answerId param
-  app.param('answerId', answers.answer);
+    app.param('answerId', answers.answer);
 
     // Question Routes
-  var questions = require('../app/controllers/questions');
-  app.get('/questions', questions.all);
-  app.get('/questions/:questionId', questions.show);
+    var questions = require('../app/controllers/questions');
+    app.get('/questions', questions.all);
+    app.get('/questions/:questionId', questions.show);
     // Finish with setting up the questionId param
-  app.param('questionId', questions.question);
+    app.param('questionId', questions.question);
 
     // Avatar Routes
   var avatars = require('../app/controllers/avatars');

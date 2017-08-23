@@ -27,7 +27,7 @@ function Game(gameID, io) {
   this.winnerAutopicked = false;
   this.czar = -1; // Index in this.players
   this.playerMinLimit = 3;
-  this.playerMaxLimit = 6;
+  this.playerMaxLimit = 12;
   this.pointLimit = 5;
   this.state = "awaiting players";
   this.round = 0;
@@ -107,13 +107,14 @@ Game.prototype.assignGuestNames = function() {
 
 Game.prototype.prepareGame = function() {
   this.state = "game in progress";
-
+  console.log('TERUNGWAS CHECK THIS NEW GAME HAS STARTED');
   this.io.sockets.in(this.gameID).emit('prepareGame',
     {
       playerMinLimit: this.playerMinLimit,
       playerMaxLimit: this.playerMaxLimit,
       pointLimit: this.pointLimit,
-      timeLimits: this.timeLimits
+      timeLimits: this.timeLimits,
+      state: this.state
     });
 
   var self = this;
