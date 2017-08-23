@@ -1,12 +1,5 @@
 angular.module('mean.system')
-<<<<<<< HEAD
-<<<<<<< HEAD
 .controller('GameController', ['$scope', 'game', '$timeout', '$location', '$http', 'MakeAWishFactsService', '$dialog', '$window', function ($scope, game, $timeout, $location, $http, MakeAWishFactsService, $dialog, $window) {
-=======
-=======
->>>>>>> fix merge conflicts
-.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', '$window', '$http', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog, $http, $window) {
->>>>>>> fix merge conflicts
     $(document).ready(function() {
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
       $('.modal').modal();
