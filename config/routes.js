@@ -12,6 +12,7 @@ module.exports = function(app, passport, auth) {
     app.post('/users', users.create);
     app.post('/users/avatars', users.avatars);
 
+    app.post('/api/auth/signup', users.create);
     // Donation Routes
     app.post('/donations', users.addDonation);
 
@@ -19,6 +20,9 @@ module.exports = function(app, passport, auth) {
         failureRedirect: '/signin',
         failureFlash: 'Invalid email or password.'
     }), users.session);
+
+    // login endpoint
+    app.post('/api/auth/signin', users.login);
 
     app.get('/users/me', users.me);
     app.get('/users/:userId', users.show);
@@ -89,5 +93,5 @@ module.exports = function(app, passport, auth) {
     var index = require('../app/controllers/index');
     app.get('/play', index.play);
     app.get('/', index.render);
-
+    app.get('/api/auth/play', index.play);
 };
