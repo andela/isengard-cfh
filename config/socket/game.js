@@ -1,4 +1,5 @@
 var async = require('async');
+var localStorage = require('localStorage');
 var _ = require('underscore');
 var questions = require(__dirname + '/../../app/controllers/questions.js');
 var answers = require(__dirname + '/../../app/controllers/answers.js');
@@ -16,6 +17,9 @@ var guestNames = [
   "The Spleen",
   "Dingle Dangle"
 ];
+var regionSelected = '';
+var regionQuestions = [];
+var regionAnswers = [];
 
 function Game(gameID, io) {
   this.io = io;
@@ -131,14 +135,25 @@ Game.prototype.prepareGame = function() {
   async.parallel([
     this.getQuestions,
     this.getAnswers
-    ],
-    function(err, results){
+  ],
+    function (err, results) {
       if (err) {
         console.log(err);
       }
-      self.questions = results[0];
-      self.answers = results[1];
-
+      regionSelected = localStorage.getItem('regionSelected');
+      if (regionSelected) {
+        regionQuestions = results[0].filter(function(result) {
+          return result.region === regionSelected;
+        });
+        regionAnswers = results[1].filter(function(result) {
+          return result.region === regionSelected;
+        });
+        self.questions = regionQuestions;
+        self.answers = regionAnswers;
+      } else {
+        self.questions = results[0];
+        self.answers = results[1];
+      }
       self.startGame();
     });
 };

@@ -12,7 +12,7 @@
       <div id="loading-container">
         <div id="loading-gif"><img ng-src="../img/loader.gif"/></div>
       </div>
-      <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride) && game.players.length >= game.playerMinLimit">
+      <div id="start-game-container" ng-click="regionModal()" ng-show="(game.playerIndex === 0 || game.joinOverride) && game.players.length >= game.playerMinLimit">
         <div id='start-game-button'>
           Start Game</br>with {{game.players.length}} players
         </div>
@@ -37,7 +37,7 @@
 </div>  -->
 
 <div class="card-panel time-question center white-text">
-  <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
+  <span style="font-size: 2.0em;" ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
 
   <div class="notifications right" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
   
@@ -56,7 +56,7 @@
       <!-- <br>  -->
       <!-- <p class="notifications right">Terungwa has won the game...</p> -->
       <div>
-        <a class="start-btn btn waves-effect waves-light deep-orange accent-3" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride) &&  game.players.length >= game.playerMinLimit">
+        <a class="start-btn btn waves-effect waves-light deep-orange accent-3" ng-click="regionModal()" ng-show="(game.playerIndex === 0 || game.joinOverride) &&  game.players.length >= game.playerMinLimit">
           Start Game</br>with {{game.players.length}} players
         </a>
       </div>
@@ -78,6 +78,31 @@
     </div>
   </div>
   <!-- Game over stuff  -->
+  <!-- Region Modal Structure -->
+  <div id="region" class="modal black-text" ng-controller="IndexController">
+    <form>
+      <div class="modal-content">
+        <div class = "modal-header-flex">
+          <h4>Specify a Region</h4>
+        </div>
+        <hr>
+        <div class="modal-body region-form">
+          <span>Select region based on the card questions you want</span>
+          <select class="form-control" name="region" ng-model="data.region" style="display: block">
+            <option value="" disabled selected>Choose your option</option>
+            <option value="Africa">Africa</option>
+            <option value="Asia">Asia</option>
+            <option value="America">America</option>
+            <option value="Europe">Europe</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-action waves-effect waves-red btn-flat" ng-click="selectRegion()"><strong>Play Game</strong></button>
+        <a href="" class="modal-action modal-close waves-effect waves-red btn-flat"><strong>Cancel</strong></a>
+      </div>
+    </form>
+  </div>
 
 </div>
 

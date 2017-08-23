@@ -3,6 +3,7 @@ const async = require('async');
 module.exports = function (app, passport, auth) {
     // User Routes
   const users = require('../app/controllers/users');
+  const region = require('../app/controllers/region');
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
   app.get('/chooseavatars', users.checkAvatar);
@@ -94,6 +95,8 @@ module.exports = function (app, passport, auth) {
   app.get('/play', index.play);
   app.get('/', index.render);
   app.get('/api/auth/play', index.play);
+  // Route for region
+  app.post('/api/region', region.setRegion);
 
   // Route for the leaderboard
   const board = require('../app/controllers/leaderBoard');
