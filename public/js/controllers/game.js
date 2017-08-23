@@ -144,6 +144,7 @@ angular.module('mean.system')
 
     // In case player doesn't pick a card in time, show the table
   $scope.$watch('game.state', function() {
+    console.log("GAME_STATE++==-=>", game.state);
     if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
       $scope.showTable = true;
     }
@@ -177,6 +178,18 @@ angular.module('mean.system')
       game.startNextRound();
     }
   };
+
+    $scope.shuffleCards = () => {
+    // const target = $('#czarModal');
+    const card = $(`#${event.target.id}`);
+    card.addClass('animated flipOutY');
+    setTimeout(() => {
+      $scope.startNextRound();
+      card.removeClass('animated flipOutY');
+      // target.addClass('none');
+    }, 500);
+  };
+
   $scope.flipCards = () => {
     const card = angular.element(document.getElementsByClassName('special-czar-card'));
     card.addClass('slide');

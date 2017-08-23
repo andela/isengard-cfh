@@ -1,7 +1,7 @@
 <script type="text/javascript">
-  $(document).ready(function(){
-    $('.modal').modal();
-  });
+  // $(document).ready(function(){
+  //   $('.modal').modal();
+  // });
 </script>
 
 <div ng-cloak id="cards-container" ng-hide="game.state === 'game ended' || game.state ==='game dissolved'">
@@ -90,9 +90,9 @@
     <img src="../img/black-card-6.jpg" class=""/>
  </div>
 </div>-->
+
 <div id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
   <div id="czar-blank-inner">
-    You are the Card Czar. <br>
     <span id="smaller-text">Players are choosing their answers. Prepare to select a winner.</span>
   </div>
   <div id='charity-fact-container'>
@@ -106,5 +106,22 @@
       <img src='/img/make-a-wish-logo.png'/>
     </div>
 
+  </div>
+  <div id="czarModal" ng-click="shuffleCards()" ng-if="game.state === 'pick black card'" class="czar-best fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+    <!-- Modal for the czar to draw card-->
+      <div class="modal-content center">
+          <center>
+              <h4 id="shuffleText">You are the Czar - Click a card to pick the next question</h4>
+              <div ng-style="{'cursor':'pointer'}" style='margin: auto;'><center>
+                <img src='../img/black-card-6.jpg' style='width: 100px;' class='animated flipInX' id='shufflecard1' />
+                <img src='../img/black-card-6.jpg' style='width: 100px;' class='animated flipInX' id='shufflecard2' />
+                <img src='../img/black-card-6.jpg' style='width: 100px;' class='animated flipInX' id='shufflecard3' />
+                <img src='../img/black-card-6.jpg' style='width: 100px;' class='animated flipInX' id='shufflecard4' />
+                <img src='../img/black-card-6.jpg' style='width: 100px;' class='animated flipInX' id='shufflecard5' />
+              </div>
+        </center>
+      </div>
+    </div>
   </div>
 </div>
