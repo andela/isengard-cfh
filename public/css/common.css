@@ -45,13 +45,24 @@
   padding-right: 2%;
 }
 .card.smallest {
-  font-size: 0.750em;
+  font-size: 0.950em;
 }
 @media (max-width: 520px) {
   .card.smallest {
     font-size: 10px;
   }
 }
+
+.question-font-size {
+  font-size: 1.8rem !important;
+}
+
+@media (max-width: 520px) {
+  .question-font-size {
+    font-size: 0.9rem;
+  }
+}
+
 .card u {
   position: relative;
   content: '';

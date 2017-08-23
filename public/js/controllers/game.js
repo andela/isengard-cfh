@@ -1,5 +1,5 @@
 angular.module('mean.system')
-.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
+.controller('GameController', ['$scope', 'game', '$timeout', '$location', '$http', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, $http, MakeAWishFactsService, $dialog) {
     $(document).ready(function() {
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
       $('.modal').modal();
@@ -23,7 +23,9 @@ angular.module('mean.system')
     $scope.pickedCards = [];
     var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
-
+    $scope.data = {
+      region: null
+    };
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
@@ -163,6 +165,23 @@ angular.module('mean.system')
         $scope.showTable = true;
       }
     });
+    $scope.regionModal = function () {
+      const guestModal = $('#region');
+      guestModal.modal('open');
+    };
+    
+    $scope.selectRegion = function () {
+      if ($scope.data.region === null) {
+        Materialize.toast('No Region Selected!!', 4000, 'red');
+        return;
+      }
+      var region = { region: $scope.data.region };
+      $http.post('/api/region', JSON.stringify(region));
+      const guestModal = $('#region');
+      guestModal.modal('close');
+      $scope.startGame();
+    };
+
 
     $scope.$watch('game.gameID', function() {
       if (game.gameID && game.state === 'awaiting players') {
