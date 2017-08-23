@@ -1,4 +1,4 @@
-<div id="question-container-inner">
+ <!-- <div class="card-panel grey">
   <div class="card longBlack">
     <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
     <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
@@ -17,10 +17,10 @@
           Start Game</br>with {{game.players.length}} players
         </div>
       </div>
-    </div>
-   
+    </div> -->
+
     <!-- Game Over Stuff -->
-    <div id="game-end-info">
+     <!-- <div id="game-end-info">
       <div id="people-left-game-top" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
         <div class="game-end-headline">What the!? The game ended because too many people left! </div>
         Our sincere apologies.
@@ -34,5 +34,50 @@
       </div>
     </div>
   </div>
+</div>  -->
+
+<div class="card-panel time-question center white-text">
+  <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
+
+  <div class="notifications right" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
+  
+  <div ng-show="game.state === 'awaiting players'">
+    <div class="col s12 m3 player-count-div">
+      <p class="flow-text player-count">
+        {{game.players.length}} / 12 <span>Players</span>
+      </p>
+    </div>
+    <div class="find-players-div col s12 m9">
+      <!-- <div class="row"></div> -->
+      <p class="find-players">Finding Players</p>
+      <!-- <p class="find-player-gif">Loading...</p> -->
+      
+      <img ng-src="../img/loader.gif" />
+      <!-- <br>  -->
+      <!-- <p class="notifications right">Terungwa has won the game...</p> -->
+      <div>
+        <a class="start-btn btn waves-effect waves-light deep-orange accent-3" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride) &&  game.players.length >= game.playerMinLimit">
+          Start Game</br>with {{game.players.length}} players
+        </a>
+      </div>
+    </div>
+      <!-- Game Over Stuff  -->
+    
+    <div>
+      <div ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
+        <p class="notification-messages">What the!? The game ended because too many people left! 
+        Our sincere apologies.</p>
+      </div>
+      <div ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
+        <p class="notification-messages">Congratulations! You won the game, <span class="lime-text accent-3">{{game.players[game.playerIndex].username | upperFirstLetter}}!</span> We hope you feel special. If you'd like to share that special feeling with the world, consider donating to charity. Or just horde it all for youself.</p>
+      </div>
+      <div ng-show="game.state === 'game ended' && game.gameWinner !== game.playerIndex">
+        <p>Aw, shucks! {{game.players[game.gameWinner].username | upperFirstLetter }} won the game!</p>
+        That makes you a loser, unfortunately.
+      </div>
+    </div>
+  </div>
+  <!-- Game over stuff  -->
+
 </div>
 

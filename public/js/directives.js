@@ -7,7 +7,8 @@ angular.module('mean.directives', [])
         scope.colors = ['#7CE4E8', '#FFFFa5', '#FC575E', '#F2ADFF', '#398EC4', '#8CFF95'];
       }
     };
-  }).directive('answers', function() {
+  })
+  .directive('answers', function() {
     return {
       restrict: 'EA',
       templateUrl: '/views/answers.html',
@@ -52,7 +53,8 @@ angular.module('mean.directives', [])
         });
       }
     };
-  }).directive('question', function() {
+  })
+  .directive('question', function() {
     return {
       restrict: 'EA',
       templateUrl: '/views/question.html',
@@ -65,7 +67,8 @@ angular.module('mean.directives', [])
       templateUrl: '/views/timer.html',
       link: function(scope, elem, attr){}
     };
-  }).directive('landing', function() {
+  })
+  .directive('landing', function() {
     return {
       restrict: 'EA',
       link: function(scope, elem, attr) {
@@ -103,4 +106,26 @@ angular.module('mean.directives', [])
       "<div class='ng-modal-close' ng-click='hideModal()'>X</div>" +
       "<div class='ng-modal-dialog-content' ng-transclude></div></div></div>"
     };
+  })
+  .directive('chatbox', function() {
+    return {
+      restrict: 'EA',
+      templateUrl: '/views/chatbox.html',
+      link(scope, elem, attr) {
+        scope.isHidden = false;
+        scope.hideChat = function() {
+          scope.isHidden = !scope.isHidden;
+        };
+      }
+    };
+  })
+  .directive('memberbox', function() {
+    return {
+      restrict: 'EA',
+      templateUrl: '/views/useringame.html',
+      link(scope, elem, attr) {
+        scope.colors = ['#7CE4E8', '#FFFFa5', '#FC575E', '#F2ADFF', '#398EC4', '#8CFF95'];
+      }
+    };
   });
+
