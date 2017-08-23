@@ -1,4 +1,5 @@
 angular.module('mean.system')
+<<<<<<< HEAD
 .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', '$window', '$http', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog, $http, $window) {
     $(document).ready(function() {
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
@@ -15,6 +16,9 @@ angular.module('mean.system')
       });
     });
 
+=======
+.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', '$http', '$window', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog, $http, $window) {
+>>>>>>> 21e4db9d7b4debfb684d758cdbee9283a08fac69
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
