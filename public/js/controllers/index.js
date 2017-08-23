@@ -1,6 +1,6 @@
 angular.module('mean.system')
-.controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', '$http', '$window', function ($scope, Global, $location, socket, game, AvatarService, $http, $window) {
-  $scope.global = Global;
+  .controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', '$http', '$window', function ($scope, Global, $location, socket, game, AvatarService, $http, $window) {
+    $scope.global = Global;
 
   $(document).ready(function() {
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
@@ -51,51 +51,53 @@ angular.module('mean.system')
         })
         .error(function (error) {
         });
-  };
-  $scope.signup = function () {
-    $http.post('/api/auth/signup', JSON.stringify($scope.formData))
-     .success(function (data) {
-       if (data.status === true) {
-         $window.localStorage.setItem('token', JSON.stringify(data.token));
-         $window.location.href = '/';
-       }
-     });
-  };
-  $scope.playGame = function () {
-    var token = $window.localStorage.getItem('token');
-    var config = { headers: {
-      Authorization: 'Bearer ' + token,
-      Accept: 'application/json;odata=verbose',
-      'X-Testing': 'testing'
-    }
     };
-    $http.get('/api/auth/play?custom', config)
-    .success(function (data) {
-      if (data.status === true) {
-        $window.location.href = '/#!/app?custom';
+    $scope.signup = function () {
+      $http.post('/api/auth/signup', JSON.stringify($scope.formData))
+        .success(function (data) {
+          if (data.status === true) {
+            $window.localStorage.setItem('token', JSON.stringify(data.token));
+            $window.location.href = '/';
+          }
+        });
+    };
+
+    $scope.playGame = function () {
+      var token = $window.localStorage.getItem('token');
+      var config = {
+        headers: {
+          Authorization: 'Bearer ' + token,
+          Accept: 'application/json;odata=verbose',
+          'X-Testing': 'testing'
+        }
+      };
+      $http.get('/api/auth/play?custom', config)
+        .success(function (data) {
+          if (data.status === true) {
+            $window.location.href = '/#!/app?custom';
+          }
+        });
+    };
+    $scope.logout = function () {
+      $window.localStorage.removeItem('token');
+      $http.get('/signout').success(function (data) {
+        if (data.status === true) {
+          $window.location.href = '/';
+        }
+      }).error(function (error) {
+      });
+    };
+    $scope.selectAvatar = function (event, avatarIndex) {
+      const selectedAvatar = event.currentTarget;
+      $('.avatars').removeClass('avatar-selected');
+      $(selectedAvatar).addClass('avatar-selected');
+      if ($scope.formData) {
+        $scope.formData.avatar = avatarIndex;
       }
-    });
-  };
-  $scope.logout = function () {
-    $window.localStorage.removeItem('token');
-    $http.get('/signout').success(function (data) {
-      if (data.status === true) {
-        $window.location.href = '/';
-      }
-    }).error(function (error) {
-    });
-  };
-  $scope.selectAvatar = function(event, avatarIndex) {
-    const selectedAvatar = event.currentTarget;
-    $('.avatars').removeClass('avatar-selected');
-    $(selectedAvatar).addClass('avatar-selected');
-    if ($scope.formData) {
-      $scope.formData.avatar = avatarIndex;
-    }
-  };
-  $scope.avatars = [];
-  AvatarService.getAvatars()
-  .then(function (data) {
-    $scope.avatars = data;
-  });
-}]);
+    };
+    $scope.avatars = [];
+    AvatarService.getAvatars()
+      .then(function (data) {
+        $scope.avatars = data;
+      });
+  }]);
