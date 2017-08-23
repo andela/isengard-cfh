@@ -1,5 +1,9 @@
 angular.module('mean.system')
+<<<<<<< HEAD
 .controller('GameController', ['$scope', 'game', '$timeout', '$location', '$http', 'MakeAWishFactsService', '$dialog', '$window', function ($scope, game, $timeout, $location, $http, MakeAWishFactsService, $dialog, $window) {
+=======
+.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', '$window', '$http', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog, $http, $window) {
+>>>>>>> fix merge conflicts
     $(document).ready(function() {
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
       $('.modal').modal();
@@ -149,7 +153,12 @@ angular.module('mean.system')
       const playersIds = game.players.map((player, index) => {
         return player.userID;
       });
+<<<<<<< HEAD
       $http.post(`/api/games/${game.gameID}/start`, {
+=======
+      console.log(playersIds);
+      $http.post(`http://localhost:3000/api/games/${game.gameID}/start`, {
+>>>>>>> fix merge conflicts
         playersIds
       }, config).then((res) => {
         console.log('Game saved');
