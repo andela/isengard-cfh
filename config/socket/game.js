@@ -1,6 +1,8 @@
 var async = require('async');
 var localStorage = require('localStorage');
 var _ = require('underscore');
+var mongoose = require('mongoose');
+var GameModel = mongoose.model('Game');
 var questions = require(__dirname + '/../../app/controllers/questions.js');
 var answers = require(__dirname + '/../../app/controllers/answers.js');
 var guestNames = [
@@ -65,7 +67,8 @@ Game.prototype.payload = function() {
       avatar: player.avatar,
       premium: player.premium,
       socketID: player.socket.id,
-      color: player.color
+      color: player.color,
+      userID: player.userID
     });
   });
   return {
@@ -241,6 +244,18 @@ Game.prototype.stateEndGame = function(winner) {
   this.state = "game ended";
   this.gameWinner = winner;
   this.sendUpdate();
+  const winnerId = this.gameWinner.userID;
+  GameModel.update({ id: this.gameID }, {
+    $set: {
+      winnerId
+    }
+  }, function(err) {
+    if (err) {
+      console.log('Game winner not set');
+    } else {
+      console.log(`Game winner is ${winnerId}`);
+    }
+  });
 };
 
 Game.prototype.stateDissolveGame = function() {
