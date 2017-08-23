@@ -185,16 +185,7 @@ angular.module('mean.system')
       const playersIds = game.players.map((player, index) => {
         return player.userID;
       });
-<<<<<<< HEAD
-<<<<<<< HEAD
       $http.post(`/api/games/${game.gameID}/start`, {
-=======
-      console.log(playersIds);
-      $http.post(`http://localhost:3000/api/games/${game.gameID}/start`, {
->>>>>>> fix merge conflicts
-=======
-      $http.post(`/api/games/${game.gameID}/start`, {
->>>>>>> fix api url issue
         playersIds
       }, config).then((res) => {
         console.log('Game saved');
