@@ -1,6 +1,6 @@
 </script>
-<div id="app-container" ng-controller="GameController">
-  <div id="menu-container">
+<div class="block-gaming-area" ng-controller="GameController">
+  <!-- <div id="menu-container">
     <div id="logo">
       <span id="first-word">Cards</span>
       <span id="second-word"> for</span>
@@ -13,50 +13,84 @@
       <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </span>
+  </div> -->
+
+  <div class="navbar-fixed">
+    <nav class="" role="navigation"> 
+      <div class="nav-wrapper">
+        <a id="logo-container" href="#" class="logo-text brand-logo deep-orange-text accent-3">Cards for Humanity</a>
+        <ul class="right hide-on-med-and-down white-text">
+          <li><a ng-click="abandonGame()">Abandon Game</a></li>
+          <li><a href="#" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+          <li><a ng-click="abandonGame()">Abandon Game</a></li>
+          <li><a href="#" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      </div>
+    <div id="nav-divider" class="divider"></div>      
+    </nav>
   </div>
-  <div id="gameplay-container">
-    
-    <div id="upper-gameplay-container">
-      <div id="menu-timeremaining-container">
-        <div id="menu-container">
-          <span id="menu-button">Menu</span>
-        </div>
-        <div id="timer-container">
+
+  <!-- <div class="row">
+    <div id="gameplay-container">
+      <div class="row">
+          <div id="menu-container">
+            <span id="menu-button">Menu</span>
+          </div>
+            <div class="col s12 m2">
+              <timer></timer>
+            </div>
+         
+          <div class="col s12 m6">
+            <question></question>
+          </div>
+      </div>
+      <answers></answers>
+    </div>
+  </div> -->
+
+  <div class="row game-container">
+    <div class="row">
+      <!-- Time Remaining -->
+      <div class="col s12 m9">
+        <div class="col s12 m3">
           <timer></timer>
         </div>
+        <!-- Questions  -->
+        <div class="col s12 m9">
+          <question></question>
+        </div>
+        <div class="col s12 m12">
+          <div class="card-panel center answers-panel">
+            <span class="white-text">
+              <answers></answers>              
+            </span>
+          </div>
+        </div>
       </div>
-      <div id="question-container-outer">
-        <question></question>
+      <!-- Avatars  -->
+      <div class="col s12 m3">
+        <div class=" card-panel member-area">
+          <memberbox></memberbox>
+          <chatbox></chatbox>
+          <span class="white-text">
+          </span>
+        </div>
       </div>
     </div>
-    <answers></answers>
+    <!--<div class="row">
+        <div class="card-panel answers-panel">
+          <span class="white-text">
+          </span>
+        </div>
+      </div>-->
+    </div>
+    
   </div>
   <modal-dialog show='modalShown' width='750px' height='60%'>
     <p>Welcome to the newly created game<p>
   </modal-dialog>
-  <!-- Region Modal Structure -->
-  <div id="region" class="modal" ng-controller="IndexController">
-    <form>
-      <div class="modal-content">
-        <div class = "modal-header-flex">
-          <h4>Specify a Region</h4>
-        </div>
-        <hr>
-        <div class="modal-body region-form">
-          <span>Select region based on the card questions you want</span>
-          <select class="form-control" name="region" ng-model="data.region" style="display: block">
-            <option value="" disabled selected>Choose your option</option>
-            <option value="Africa">Africa</option>
-            <option value="Asia">Asia</option>
-            <option value="America">America</option>
-            <option value="Europe">Europe</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="modal-action waves-effect waves-red btn-flat" ng-click="selectRegion()"><strong>Play Game</strong></button>
-        <a href="" class="modal-action modal-close waves-effect waves-red btn-flat"><strong>Cancel</strong></a>
-      </div>
-    </form>
-  </div>
 </div>

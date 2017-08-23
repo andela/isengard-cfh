@@ -1,5 +1,20 @@
 angular.module('mean.system')
 .controller('GameController', ['$scope', 'game', '$timeout', '$location', '$http', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, $http, MakeAWishFactsService, $dialog) {
+    $(document).ready(function() {
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+      $('.modal').modal();
+      $('.button-collapse').sideNav();
+      $('.parallax').parallax();
+      $('nav').css('background-color', 'transparent');
+      $('#nav-divider').css('background-color', 'rgba(255,187,10,1)');
+      $('.button-collapse').sideNav({
+        menuWidth: 315,
+        edge: 'left',
+        closeOnClick: true,
+        draggable: true,
+      });
+    });
+
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -11,7 +26,6 @@ angular.module('mean.system')
     $scope.data = {
       region: null
     };
-    $('.modal').modal();
     $scope.pickCard = function(card) {
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
