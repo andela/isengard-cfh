@@ -137,9 +137,25 @@ angular.module('mean.system')
     return game.winningCard !== -1;
   };
 
-<<<<<<< HEAD
   $scope.startGame = function() {
     game.startGame();
+    var token = $window.localStorage.getItem('token');
+    var config = { headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/json;odata=verbose',
+        'X-Testing': 'testing'
+      }
+    };
+    const playersIds = game.players.map((player, index) => {
+      return player.userID;
+    });
+    $http.post(`/api/games/${game.gameID}/start`, {
+      playersIds
+    }, config).then((res) => {
+      console.log('Game saved');
+    }, (err) => {
+      console.log(err);
+    });
   };
 
   $scope.abandonGame = function() {
@@ -147,34 +163,6 @@ angular.module('mean.system')
     $location.path('/');
   };
 
-=======
-    $scope.startGame = function() {
-      game.startGame();
-      var token = $window.localStorage.getItem('token');
-      var config = { headers: {
-          Authorization: 'Bearer ' + token,
-          Accept: 'application/json;odata=verbose',
-          'X-Testing': 'testing'
-        }
-      };
-      const playersIds = game.players.map((player, index) => {
-        return player.userID;
-      });
-      console.log(playersIds);
-      $http.post(`http://localhost:3000/api/games/${game.gameID}/start`, {
-        playersIds
-      }, config).then((res) => {
-        console.log('Game saved');
-      }, (err) => {
-        console.log(err);
-      });
-    };
-    $scope.abandonGame = function() {
-      game.leaveGame();
-      $location.path('/');
-    };
-    
->>>>>>> add route to start game
     // Catches changes to round to update when no players pick card
     // (because game.state remains the same)
   $scope.$watch('game.round', function() {
@@ -238,6 +226,15 @@ angular.module('mean.system')
   $scope.startNextRound = () => {
     if ($scope.isCzar()) {
       game.startNextRound();
+      }
+    });
+    if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
+      console.log('joining custom game');
+      game.joinGame('joinGame',$location.search().game);
+    } else if ($location.search().custom) {
+      game.joinGame('joinGame',null,true);
+    } else {
+      game.joinGame();
     }
   };
 
