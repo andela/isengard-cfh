@@ -483,3 +483,7 @@ h4 {
   display: block;
 }
 
+.congrats-message {
+  font-size: 0.7rem;
+}
+
