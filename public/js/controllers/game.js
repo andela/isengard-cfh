@@ -42,122 +42,122 @@ angular.module('mean.system')
         } else {
           $scope.pickedCards.pop();
         }
-      }
-    };
+    }
+  };
 
-    $scope.pointerCursorStyle = function() {
-      if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
-        return {'cursor': 'pointer'};
-      } else {
-        return {};
-      }
-    };
+  $scope.pointerCursorStyle = function() {
+    if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
+      return {'cursor': 'pointer'};
+    } else {
+      return {};
+    }
+  };
 
-    $scope.sendPickedCards = function() {
-      game.pickCards($scope.pickedCards);
-      $scope.showTable = true;
-    };
+  $scope.sendPickedCards = function() {
+    game.pickCards($scope.pickedCards);
+    $scope.showTable = true;
+  };
 
-    $scope.cardIsFirstSelected = function(card) {
-      if (game.curQuestion.numAnswers > 1) {
-        return card === $scope.pickedCards[0];
-      } else {
-        return false;
-      }
-    };
+  $scope.cardIsFirstSelected = function(card) {
+    if (game.curQuestion.numAnswers > 1) {
+      return card === $scope.pickedCards[0];
+    } else {
+      return false;
+    }
+  };
 
-    $scope.cardIsSecondSelected = function(card) {
-      if (game.curQuestion.numAnswers > 1) {
-        return card === $scope.pickedCards[1];
-      } else {
-        return false;
-      }
-    };
+  $scope.cardIsSecondSelected = function(card) {
+    if (game.curQuestion.numAnswers > 1) {
+      return card === $scope.pickedCards[1];
+    } else {
+      return false;
+    }
+  };
 
-    $scope.firstAnswer = function($index){
-      if($index % 2 === 0 && game.curQuestion.numAnswers > 1){
-        return true;
-      } else{
-        return false;
-      }
-    };
+  $scope.firstAnswer = function($index){
+    if($index % 2 === 0 && game.curQuestion.numAnswers > 1){
+      return true;
+    } else{
+      return false;
+    }
+  };
 
-    $scope.secondAnswer = function($index){
-      if($index % 2 === 1 && game.curQuestion.numAnswers > 1){
-        return true;
-      } else{
-        return false;
-      }
-    };
+  $scope.secondAnswer = function($index){
+    if($index % 2 === 1 && game.curQuestion.numAnswers > 1){
+      return true;
+    } else{
+      return false;
+    }
+  };
 
-    $scope.showFirst = function(card) {
-      return game.curQuestion.numAnswers > 1 && $scope.pickedCards[0] === card.id;
-    };
+  $scope.showFirst = function(card) {
+    return game.curQuestion.numAnswers > 1 && $scope.pickedCards[0] === card.id;
+  };
 
-    $scope.showSecond = function(card) {
-      return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
-    };
+  $scope.showSecond = function(card) {
+    return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
+  };
 
-    $scope.isCzar = function() {
-      return game.czar === game.playerIndex;
-    };
+  $scope.isCzar = function() {
+    return game.czar === game.playerIndex;
+  };
 
-    $scope.isPlayer = function($index) {
-      return $index === game.playerIndex;
-    };
+  $scope.isPlayer = function($index) {
+    return $index === game.playerIndex;
+  };
 
-    $scope.isCustomGame = function() {
-      return !(/^\d+$/).test(game.gameID) && game.state === 'awaiting players';
-    };
+  $scope.isCustomGame = function() {
+    return !(/^\d+$/).test(game.gameID) && game.state === 'awaiting players';
+  };
 
-    $scope.isPremium = function($index) {
-      return game.players[$index].premium;
-    };
+  $scope.isPremium = function($index) {
+    return game.players[$index].premium;
+  };
 
-    $scope.currentCzar = function($index) {
-      return $index === game.czar;
-    };
+  $scope.currentCzar = function($index) {
+    return $index === game.czar;
+  };
 
-    $scope.winningColor = function($index) {
-      if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
-        return $scope.colors[game.players[game.winningCardPlayer].color];
-      } else {
-        return '#f9f9f9';
-      }
-    };
+  $scope.winningColor = function($index) {
+    if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
+      return $scope.colors[game.players[game.winningCardPlayer].color];
+    } else {
+      return '#f9f9f9';
+    }
+  };
 
-    $scope.pickWinning = function(winningSet) {
-      if ($scope.isCzar()) {
-        game.pickWinning(winningSet.card[0]);
-        $scope.winningCardPicked = true;
-      }
-    };
+  $scope.pickWinning = function(winningSet) {
+    if ($scope.isCzar()) {
+      game.pickWinning(winningSet.card[0]);
+      $scope.winningCardPicked = true;
+    }
+  };
 
-    $scope.winnerPicked = function() {
-      return game.winningCard !== -1;
-    };
+  $scope.winnerPicked = function() {
+    return game.winningCard !== -1;
+  };
 
-    $scope.startGame = function() {
-      game.startGame();
-    };
+  $scope.startGame = function() {
+    game.startGame();
+  };
 
-    $scope.abandonGame = function() {
-      game.leaveGame();
-      $location.path('/');
-    };
+  $scope.abandonGame = function() {
+    game.leaveGame();
+    $location.path('/');
+  };
 
     // Catches changes to round to update when no players pick card
     // (because game.state remains the same)
-    $scope.$watch('game.round', function() {
-      $scope.hasPickedCards = false;
-      $scope.showTable = false;
-      $scope.winningCardPicked = false;
-      $scope.makeAWishFact = makeAWishFacts.pop();
-      if (!makeAWishFacts.length) {
-        makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-      }
-      $scope.pickedCards = [];
-    });
+  $scope.$watch('game.round', function() {
+    $scope.hasPickedCards = false;
+    $scope.showTable = false;
+    $scope.winningCardPicked = false;
+    $scope.makeAWishFact = makeAWishFacts.pop();
+    if (!makeAWishFacts.length) {
+      makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+    }
+    $scope.pickedCards = [];
+  });
 
     // In case player doesn't pick a card in time, show the table
     $scope.$watch('game.state', function() {
@@ -183,9 +183,9 @@ angular.module('mean.system')
     };
 
 
-    $scope.$watch('game.gameID', function() {
-      if (game.gameID && game.state === 'awaiting players') {
-        if (!$scope.isCustomGame() && $location.search().game) {
+  $scope.$watch('game.gameID', function() {
+    if (game.gameID && game.state === 'awaiting players') {
+      if (!$scope.isCustomGame() && $location.search().game) {
           // If the player didn't successfully enter the request room,
           // reset the URL so they don't think they're in the requested room.
           $location.search({});
@@ -203,17 +203,43 @@ angular.module('mean.system')
             $scope.modalShown = true;
           }
         }
-      }
-    });
-
-    if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
-      console.log('joining custom game');
-      game.joinGame('joinGame',$location.search().game);
-    } else if ($location.search().custom) {
-      game.joinGame('joinGame',null,true);
-    } else {
-      game.joinGame();
     }
+  });
+
+  $scope.startNextRound = () => {
+    if ($scope.isCzar()) {
+      game.startNextRound();
+    }
+  };
+
+    $scope.shuffleCards = () => {
+    // const target = $('#czarModal');
+    const card = $(`#${event.target.id}`);
+    card.addClass('animated flipOutY');
+    setTimeout(() => {
+      $scope.startNextRound();
+      card.removeClass('animated flipOutY');
+      // target.addClass('none');
+    }, 500);
+  };
+
+  $scope.flipCards = () => {
+    const card = angular.element(document.getElementsByClassName('special-czar-card'));
+    card.addClass('slide');
+    $timeout(() => {
+      $scope.startNextRound();
+      card.addClass('none');
+    }, 4000);
+  };
+
+  if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
+    console.log('joining custom game');
+    game.joinGame('joinGame',$location.search().game);
+  } else if ($location.search().custom) {
+    game.joinGame('joinGame',null,true);
+  } else {
+    game.joinGame();
+  }
 
     $scope.$watch ('game.modal', function() {
       if (game.modal === 'Cannot join game, maximum number of players exceeded') {

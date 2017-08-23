@@ -67,12 +67,26 @@
       <!-- This is for testing -->
       <!-- <a href="http://www.crowdrise.com" id="crowdriseStaticLink-project-36715" title="Fundraising Websites on Crowdrise">Fundraising Websites - Crowdrise</a> -->
       <!-- <script type="text/javascript" src="https://apisandbox.crowdrise.com/widgets/donate/project/36715/?callback=userDonationCb"></script> -->
+  </div>
+</div>
+  <!--<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>-->
 
-    </div> 
-</div> 
- <div id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+  <!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content czar-modal">
+      <div ng-click="flipCards()">
+        <img class="modal-action modal-close" src="../img/black-card-6.jpg" />
+      </div>
+  </div>
+</div>
+<!--<div class="czar-modal" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
+  <div ng-click="flipCards()">
+    <img src="../img/black-card-6.jpg" class=""/>
+ </div>
+</div>-->
+
+<div id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
   <div id="czar-blank-inner">
-    You are the Card Czar. <br>
     <span id="smaller-text">Players are choosing their answers. Prepare to select a winner.</span>
   </div>
   <div id='charity-fact-container'>
@@ -87,4 +101,21 @@
     </div>
 
   </div>
-</div> 
+  <div id="czarModal" ng-click="shuffleCards()" ng-if="game.state === 'pick black card'" class="czar-best fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+    <!-- Modal for the czar to draw card-->
+      <div class="modal-content center">
+          <center>
+              <h4 id="shuffleText">You are the Czar - Click a card to pick the next question</h4>
+              <div ng-style="{'cursor':'pointer'}" style='margin: auto;'><center>
+                <img src='../img/black-card-6.jpg' style='width: 100px;' class='animated flipInX' id='shufflecard1' />
+                <img src='../img/black-card-6.jpg' style='width: 100px;' class='animated flipInX' id='shufflecard2' />
+                <img src='../img/black-card-6.jpg' style='width: 100px;' class='animated flipInX' id='shufflecard3' />
+                <img src='../img/black-card-6.jpg' style='width: 100px;' class='animated flipInX' id='shufflecard4' />
+                <img src='../img/black-card-6.jpg' style='width: 100px;' class='animated flipInX' id='shufflecard5' />
+              </div>
+        </center>
+      </div>
+    </div>
+  </div>
+</div>
