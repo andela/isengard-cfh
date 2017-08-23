@@ -519,3 +519,7 @@ align-center a:hover,
   padding: 5px;
   display: block;
 }
+
+.congrats-message {
+  font-size: 0.7rem;
+}
