@@ -20,32 +20,12 @@
       <div class="nav-wrapper">
         <a id="logo-container" href="#" class="logo-text brand-logo deep-orange-text accent-3">Cards for Humanity</a>
         <ul class="right hide-on-med-and-down white-text">
-          <li><a >Home</a></li>
-          <!-- <li><a onClick="scroll(0,1100);">How to play</a></li> -->
-          <!-- <li><a onClick="scroll(0,1750);">Charity</a></li> -->
           <li><a ng-click="abandonGame()">Abandon Game</a></li>
-          <span ng-show="showOptions">
-            <li><button data-target="sign-up" class="btn btn-flat white-text modal-trigger btn-menu">Sign Up</button></li>
-            <li><button data-target="log-in" class="btn btn-flat white-text modal-trigger btn-menu">Sign In</button></li>
-          </span>
-          <span ng-hide="showOptions">
-            <li><a ng-click="logout()" method="get">Sign Out</a></li>
-          </span>
           <li><a href="#" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
         </ul>
 
         <ul id="nav-mobile" class="side-nav">
-          <li><aonClick="scroll(0,0);">Home</a></li>
-          <!-- <li><a onClick="scroll(0,1400);">How to play</a></li> -->
-          <!-- <li><a onClick="scroll(0,2450);">Charity</a></li> -->
           <li><a ng-click="abandonGame()">Abandon Game</a></li>
-          <span ng-show="showOptions">
-            <li><button data-target="sign-up" class="btn btn-flat black-text modal-trigger btn-menu">Sign Up</button></li>
-            <li><button data-target="log-in" class="btn btn-flat black-text modal-trigger btn-menu">Sign In</button></li>
-          </span>
-          <span ng-hide="showOptions">
-            <li><a ng-click="logout()" class="btn-menu" method="get">Sign Out</a></li>
-          </span>
           <li><a href="#" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
         </ul>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -84,7 +64,7 @@
           <question></question>
         </div>
         <div class="col s12 m12">
-          <div class="card-panel answers-panel">
+          <div class="card-panel center answers-panel">
             <span class="white-text">
               <answers></answers>              
             </span>

@@ -65,11 +65,11 @@
     
     <div>
       <div ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
-        <p>What the!? The game ended because too many people left! </p>
-        Our sincere apologies.
+        <p class="notification-messages">What the!? The game ended because too many people left! 
+        Our sincere apologies.</p>
       </div>
       <div ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
-        <p class="congrats-message">Congratulations! You won the game, <span class="lime-text accent-3">{{game.players[game.playerIndex].username | upperFirstLetter}}!</span> We hope you feel special. If you'd like to share that special feeling with the world, consider donating to charity. Or just horde it all for youself.</p>
+        <p class="notification-messages">Congratulations! You won the game, <span class="lime-text accent-3">{{game.players[game.playerIndex].username | upperFirstLetter}}!</span> We hope you feel special. If you'd like to share that special feeling with the world, consider donating to charity. Or just horde it all for youself.</p>
       </div>
       <div ng-show="game.state === 'game ended' && game.gameWinner !== game.playerIndex">
         <p>Aw, shucks! {{game.players[game.gameWinner].username | upperFirstLetter }} won the game!</p>
