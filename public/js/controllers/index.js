@@ -2,6 +2,21 @@ angular.module('mean.system')
 .controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', '$http', '$window', function ($scope, Global, $location, socket, game, AvatarService, $http, $window) {
   $scope.global = Global;
 
+  $(document).ready(function() {
+  // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+    $('.button-collapse').sideNav();
+    $('.parallax').parallax();
+    $('nav').css('background-color', 'transparent');
+    $('#nav-divider').css('background-color', 'rgba(255,187,10,1)');
+    $('.button-collapse').sideNav({
+      menuWidth: 315,
+      edge: 'left',
+      closeOnClick: true,
+      draggable: true,
+    });
+  });
+
   $scope.playAsGuest = function () {
     game.joinGame();
     $location.path('/app');
@@ -41,14 +56,14 @@ angular.module('mean.system')
     $http.post('/api/auth/signup', JSON.stringify($scope.formData))
      .success(function (data) {
        if (data.status === true) {
-         $window.localStorage.setItem('token', JSON.stringify(data.token));
+         $window.localStorage.setItem('token', data.token);
          $window.location.href = '/';
        }
      });
   };
   $scope.playGame = function () {
-    var token = $window.localStorage.getItem('token');
-    var config = { headers: {
+    const token = $window.localStorage.getItem('token');
+    const config = { headers: {
       Authorization: 'Bearer ' + token,
       Accept: 'application/json;odata=verbose',
       'X-Testing': 'testing'
@@ -70,6 +85,87 @@ angular.module('mean.system')
     }).error(function (error) {
     });
   };
+  $scope.gameHistory = function () {
+    const token = $window.localStorage.getItem('token');
+    const config = { headers: {
+      Authorization: 'Bearer ' + token,
+      Accept: 'application/json;odata=verbose',
+      'X-Testing': 'testing'
+    }
+    };
+    $http.get('/api/auth/history', config).success(function (data) {
+      const gameData = {}, games = []; let processed = 0, gamePlayers = '';
+      data.gameRecords.forEach(function(game, index) {
+        gameData.index = index + 1;
+        game.users.forEach(function(user) {
+          processed += 1;
+          gamePlayers = `${user.name} ,${gamePlayers}`;
+          if (game.creatorId === user._id) {
+            gameData.gameCreator = user.name;
+          }
+          if (game.winnerId === user._id) {
+            gameData.gameWinner = user.name;
+          }
+          if (processed === game.users.length) {
+            gameData.players = gamePlayers;
+          }
+        });
+        games.push(gameData);
+      });
+      $scope.games = games;
+    });
+  };
+
+  $scope.leaderboard = function () {
+    const token = $window.localStorage.getItem('token');
+    const config = { headers: {
+      Authorization: 'Bearer ' + token,
+      Accept: 'application/json;odata=verbose',
+      'X-Testing': 'testing'
+    }
+    };
+    $http.get('/api/auth/leaderboard', config).success(function (data) {
+      const gameWinners = [], gameData = {};
+      if (data.status === 'success' && data.users.length > 0) {
+        const copy = data.users.slice(0); let count = 0;
+        for (let i = 0; i < data.users.length; i += 1) {
+          for (let w = 0; w < copy.length; w += 1) {
+            if (data.users[i] === copy[w]) {
+              count += 1;
+              delete copy[w];
+            }
+          }
+          if (count > 0) {
+            gameData.name = data.users[i].name;
+            gameData.index = i + 1;
+            gameData.wins = count;
+          }
+          gameWinners.push(gameData);
+        }
+        $scope.gameWinners = gameWinners;
+      }
+    });
+  };
+
+  $scope.donations = function () {
+    const token = $window.localStorage.getItem('token');
+    const config = { headers: {
+      Authorization: 'Bearer ' + token,
+      Accept: 'application/json;odata=verbose',
+      'X-Testing': 'testing'
+    }
+    };
+    $http.get('/api/auth/donations', config).success(function (data) {
+      if (data.status === 'failed') {
+        $scope.status = data.status;
+        $scope.message = data.message;
+      } else {
+        $scope.status = data.status;
+        $scope.count = data.count;
+      }
+    });
+  };
+
   $scope.selectAvatar = function(event, avatarIndex) {
     const selectedAvatar = event.currentTarget;
     $('.avatars').removeClass('avatar-selected');

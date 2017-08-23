@@ -1,4 +1,4 @@
-<div id="main-bod" ng-controller="IndexController">
+<div id="main-bod">
   <!-- Fixed Logo & Menu Bar Start -->
   <div id="top-part">
     <div class="wpb-top-bar">
@@ -41,23 +41,23 @@
 
       <div class="sign-body">
         <div class="more-sign">
-          <form class="signup form-horizontal" ng-submit="signup()" method="post">
+          <form class="signup form-horizontal" action="/users" method="post">
             <div class="control-group">
               <label for="name" class="control-label"></label>
               <div class="controls">
-                <input class="input-info" id="name" ng-model="formData.name" type="text" name="name" placeholder="Full name" required novalidate />
+                <input class="input-info" id="name" type="text" name="name" placeholder="Full name" required novalidate />
               </div>
             </div>
             <div class="control-group">
               <label for="email" class="control-label"></label>
               <div class="controls">
-                <input class="input-info" id="email" ng-model="formData.email" type="email" name="email" placeholder="Email" required novalidate />
+                <input class="input-info" id="email" type="email" name="email" placeholder="Email" required novalidate />
               </div>
             </div>
             <div class="control-group">
               <label for="password" class="control-label"></label>
               <div class="controls">
-                <input class="input-info" id="password" ng-model="formData.password"  type="password" name="password" placeholder="Password" required novalidate />
+                <input class="input-info" id="password" type="password" name="password" placeholder="Password" required novalidate />
               </div>
             </div>
             <div id="contain-avatars">

@@ -1,17 +1,32 @@
 angular.module('mean.system')
 .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
-  $scope.hasPickedCards = false;
-  $scope.winningCardPicked = false;
-  $scope.showTable = false;
-  $scope.modalShown = false;
-  $scope.game = game;
-  $scope.pickedCards = [];
-  var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-  $scope.makeAWishFact = makeAWishFacts.pop();
+    $(document).ready(function() {
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+      $('.modal').modal();
+      $('.button-collapse').sideNav();
+      $('.parallax').parallax();
+      $('nav').css('background-color', 'transparent');
+      $('#nav-divider').css('background-color', 'rgba(255,187,10,1)');
+      $('.button-collapse').sideNav({
+        menuWidth: 315,
+        edge: 'left',
+        closeOnClick: true,
+        draggable: true,
+      });
+    });
 
-  $scope.pickCard = function(card) {
-    if (!$scope.hasPickedCards) {
-      if ($scope.pickedCards.indexOf(card.id) < 0) {
+    $scope.hasPickedCards = false;
+    $scope.winningCardPicked = false;
+    $scope.showTable = false;
+    $scope.modalShown = false;
+    $scope.game = game;
+    $scope.pickedCards = [];
+    var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+    $scope.makeAWishFact = makeAWishFacts.pop();
+
+    $scope.pickCard = function(card) {
+      if (!$scope.hasPickedCards) {
+        if ($scope.pickedCards.indexOf(card.id) < 0) {
           $scope.pickedCards.push(card.id);
           if (game.curQuestion.numAnswers === 1) {
             $scope.sendPickedCards();
@@ -208,4 +223,9 @@ angular.module('mean.system')
     game.joinGame();
   }
 
+    $scope.$watch ('game.modal', function() {
+      if (game.modal === 'Cannot join game, maximum number of players exceeded') {
+        $scope.modalShown = !$scope.modalShown;
+      }
+    });
 }]);

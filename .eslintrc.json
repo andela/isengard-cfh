@@ -22,6 +22,7 @@
       "requireParamDescription": false,
       "requireReturnDescription": true
     }],
+    "arrow-body-style": ["error", "always"],
     "require-jsdoc": ["error", {
         "require": {
             "FunctionDeclaration": true,

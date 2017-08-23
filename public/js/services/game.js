@@ -59,15 +59,21 @@ angular.module('mean.system')
       game.id = data.id;
     });
 
-    socket.on('prepareGame', function(data) {
-      game.playerMinLimit = data.playerMinLimit;
-      game.playerMaxLimit = data.playerMaxLimit;
-      game.pointLimit = data.pointLimit;
-      game.timeLimits = data.timeLimits;
-    });
+  socket.on('prepareGame', function(data) {
+    game.playerMinLimit = data.playerMinLimit;
+    game.playerMaxLimit = data.playerMaxLimit;
+    game.pointLimit = data.pointLimit;
+    game.timeLimits = data.timeLimits;
+    game.state = data.state;
+  });
 
-    socket.on('gameUpdate', function(data) {
+  // event listener 
+  socket.on('MaxNumberOfPlayersExceeded', function(data) {
+    //addToNotificationQueue('Cannot join game, maximum number of players exceeded');
+    game.modal = 'Cannot join game, maximum number of players exceeded';
+  });
 
+  socket.on('gameUpdate', function(data) {
     // Update gameID field only if it changed.
     // That way, we don't trigger the $scope.$watch too often
       if (game.gameID !== data.gameID) {

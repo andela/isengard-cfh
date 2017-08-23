@@ -62,6 +62,7 @@ module.exports = function(io) {
           thisGame.prepareGame();
           thisGame.sendNotification('The game has begun!');
         }
+
       }
     });
 
@@ -134,11 +135,13 @@ module.exports = function(io) {
         game.sendUpdate();
         game.sendNotification(player.username+' has joined the game!');
         if (game.players.length >= game.playerMaxLimit) {
+          console.log('THIS PLAYER IS ALLOWED TO JOIN THE GAME', player.username);
           gamesNeedingPlayers.shift();
           game.prepareGame();
         }
       } else {
         // TODO: Send an error message back to this user saying the game has already started
+        //socket.emit('MaxNumberOfPlayersExceeded')
       }
     } else {
       // Put players into the general queue
@@ -165,6 +168,7 @@ module.exports = function(io) {
       socket.join(game.gameID);
       socket.gameID = game.gameID;
       console.log(socket.id,'has joined newly created game',game.gameID);
+      socket.emit('MaxNumberOfPlayersExceeded')
       game.assignPlayerColors();
       game.assignGuestNames();
       game.sendUpdate();
@@ -180,7 +184,9 @@ module.exports = function(io) {
       game.sendUpdate();
       game.sendNotification(player.username+' has joined the game!');
       if (game.players.length >= game.playerMaxLimit) {
+        console.log('GAMES NEEDING PLAYERS BEFORE', gamesNeedingPlayers);
         gamesNeedingPlayers.shift();
+        console.log('GAMES NEEDING PLAYERS AFTER', gamesNeedingPlayers);
         game.prepareGame();
       }
     }
@@ -231,5 +237,4 @@ module.exports = function(io) {
     }
     socket.leave(socket.gameID);
   };
-
 };
