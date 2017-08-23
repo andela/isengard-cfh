@@ -492,3 +492,85 @@ h4 {
   font-size: 0.7rem;
 }
 
+/* chatbox */
+.member-area {
+  overflow: scroll;
+  height: 15cm;
+  /*display: block;*/
+  position: relative;
+  top: 0;
+  left: 0;
+
+}
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  height: 40%;
+}
+.chat-board, .chat-text-box {
+  background-color: transparent;
+  width: 100%;
+  height: 60%;
+  opacity: 1;
+}
+.chat-text-box {
+  height: 20%;
+}
+.chat-text-box > textarea {
+  height: 100%;
+  color: white;
+  outline: none;
+}
+.chat-header {
+  background-color: orangered;
+  height: 15%;
+  width: 100%;
+  cursor: pointer;
+  text-align: center;
+}
+.chat-board, .chat-text-box, .chat-header {
+  border-color: white;
+  border-style: solid;
+  border-width: thin;
+}
+.game-user {
+  width: 100%;
+  height: 10%;
+  margin-bottom: 5%;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+}
+.game-user > img {
+  height: 100%;
+  width: 20%;
+}
+.username-score {
+  float: right;
+  width: 70%;
+}
+.username-score span {
+  display: block;
+  margin-left: 10%;
+}
+.username {
+  font-weight: 900;
+  font-size: 1.5em;
+}
+#czar-container {
+  background: black;
+  text-align: center;
+  opacity: 0.4;
+  padding: 1%;
+}
+#the-czar {
+  color: white;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#king {
+  float: right;
+  width: 10%;
+}
+
