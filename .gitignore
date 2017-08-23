@@ -8,3 +8,5 @@ bower_components/
 test/article/model.js
 npm-debug.log
 package-lock.json
+question.json
+answers.json
