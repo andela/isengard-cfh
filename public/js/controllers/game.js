@@ -132,8 +132,7 @@ angular.module('mean.system')
       const playersIds = game.players.map((player, index) => {
         return player.userID;
       });
-      console.log(playersIds);
-      $http.post(`http://localhost:3000/api/games/${game.gameID}/start`, {
+      $http.post(`/api/games/${game.gameID}/start`, {
         playersIds
       }, config).then((res) => {
         console.log('Game saved');
@@ -188,7 +187,6 @@ angular.module('mean.system')
         }
       }
     });
-
     if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
       console.log('joining custom game');
       game.joinGame('joinGame',$location.search().game);
