@@ -163,7 +163,6 @@ angular.module('mean.system')
     $location.path('/');
   };
 
-<<<<<<< HEAD
   $scope.startGame = function() {
     game.startGame();
     var token = $window.localStorage.getItem('token');
@@ -172,31 +171,6 @@ angular.module('mean.system')
         Accept: 'application/json;odata=verbose',
         'X-Testing': 'testing'
       }
-=======
-    $scope.startGame = function() {
-      game.startGame();
-      var token = $window.localStorage.getItem('token');
-      var config = { headers: {
-          Authorization: 'Bearer ' + token,
-          Accept: 'application/json;odata=verbose',
-          'X-Testing': 'testing'
-        }
-      };
-      const playersIds = game.players.map((player, index) => {
-        return player.userID;
-      });
-      $http.post(`/api/games/${game.gameID}/start`, {
-        playersIds
-      }, config).then((res) => {
-        console.log('Game saved');
-      }, (err) => {
-        console.log(err);
-      });
-    };
-    $scope.abandonGame = function() {
-      game.leaveGame();
-      $location.path('/');
->>>>>>> fix merge conflicts
     };
     const playersIds = game.players.map((player, index) => {
       return player.userID;
