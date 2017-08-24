@@ -163,31 +163,6 @@ angular.module('mean.system')
     $location.path('/');
   };
 
-  $scope.startGame = function() {
-    game.startGame();
-    var token = $window.localStorage.getItem('token');
-    var config = { headers: {
-        Authorization: 'Bearer ' + token,
-        Accept: 'application/json;odata=verbose',
-        'X-Testing': 'testing'
-      }
-    };
-    const playersIds = game.players.map((player, index) => {
-      return player.userID;
-    });
-    $http.post(`/api/games/${game.gameID}/start`, {
-      playersIds
-    }, config).then((res) => {
-      console.log('Game saved');
-    }, (err) => {
-      console.log(err);
-    });
-  };
-  $scope.abandonGame = function() {
-    game.leaveGame();
-    $location.path('/');
-  };
-    
     // Catches changes to round to update when no players pick card
     // (because game.state remains the same)
   $scope.$watch('game.round', function() {
@@ -252,7 +227,6 @@ angular.module('mean.system')
     if ($scope.isCzar()) {
       game.startNextRound();
       }
-    });
     if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
       console.log('joining custom game');
       game.joinGame('joinGame',$location.search().game);
