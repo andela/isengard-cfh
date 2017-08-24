@@ -1,4 +1,4 @@
-.card {
+.game-card {
   position: relative;
   display: inline-block;
   box-sizing: border-box;
@@ -15,27 +15,27 @@
   vertical-align: top;
 }
 @media (max-width: 520px) {
-  .card {
+  .game-card {
     font-size: 14px;
     height: 115px;
     word-wrap: break-word;
   }
 }
-.card.how-to {
+.game-card.how-to {
   font-size: 1.4rem;
 }
-.card #selection-number {
+.game-card #selection-number {
   position: absolute;
   bottom: 1px;
   left: 7px;
   font-size: 18px;
 }
-.card.black {
+.game-card.black {
   background: #252525;
   border-color: white;
   color: white;
 }
-.card.longBlack {
+.game-card.longBlack {
   background: #252525;
   border-color: white;
   color: white;
@@ -44,11 +44,11 @@
   padding-left: 2%;
   padding-right: 2%;
 }
-.card.smallest {
+.game-card.smallest {
   font-size: 0.950em;
 }
 @media (max-width: 520px) {
-  .card.smallest {
+  .game-card.smallest {
     font-size: 10px;
   }
 }
@@ -63,7 +63,7 @@
   }
 }
 
-.card u {
+.game-card u {
   position: relative;
   content: '';
   display: inline-block;
@@ -73,13 +73,13 @@
   border-bottom: 0.125em solid white;
   margin-bottom: -0.125em;
 }
-.card u .small {
+.game-card u .small {
   width: 25%;
 }
-.card u .big {
+.game-card u .big {
   width: 75%;
 }
-.card u .end:after {
+.game-card u .end:after {
   position: absolute;
   right: -0.357em;
   display: inline-block;
@@ -614,63 +614,63 @@
   width: 100%;
   height: 100%;
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card {
   width: 100%;
   margin: 0px auto;
   display: block;
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #notifications {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #notifications {
   position: absolute;
   bottom: 0;
   right: 0;
   padding: 10px;
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame {
   width: 100%;
   overflow: hidden;
   height: 100%;
   position: absolute;
   right: 1%;
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #finding-players {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #finding-players {
   font-size: 33px;
   text-align: center;
   margin-top: 15px;
 }
 @media (max-width: 520px) {
-  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #finding-players {
+  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #finding-players {
     font-size: 21px;
     margin-top: 0;
   }
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #player-count-container, #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #loading-container, #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #start-game-container {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #player-count-container, #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #loading-container, #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #start-game-container {
   width: 33.333%;
   float: left;
   text-align: center;
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #player-count-container #player-count {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #player-count-container #player-count {
   font-size: 33px;
 }
 @media (max-width: 520px) {
-  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #player-count-container #player-count {
+  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #player-count-container #player-count {
     font-size: 21px;
   }
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #player-count-container #the-word-players {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #player-count-container #the-word-players {
   font-size: 17px;
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #loading-gif {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #loading-gif {
   margin: 20px;
 }
 @media (max-width: 520px) {
-  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #loading-gif {
+  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #loading-gif {
     margin-top: 5px;
   }
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #start-game-container {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #start-game-container {
   color: #333;
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #start-game-container #start-game-button {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #start-game-container #start-game-button {
   border-radius: 8px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -685,35 +685,35 @@
   cursor: pointer;
 }
 @media only screen and (min-width: 521px) and (max-width: 768px) {
-  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #start-game-container #start-game-button {
+  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #start-game-container #start-game-button {
     padding: 0.65em 2px;
     font-size: 1.1rem;
   }
 }
 @media (max-width: 520px) {
-  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #start-game-container #start-game-button {
+  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #start-game-container #start-game-button {
     padding: 0.65em 1px;
     font-size: 1rem;
   }
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #startGame #start-game-container #start-game-button:hover {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #startGame #start-game-container #start-game-button:hover {
   background: #41C2CA;
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #game-end-info {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #game-end-info {
   text-align: center;
   font-size: 16px;
 }
 @media (max-width: 520px) {
-  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #game-end-info {
+  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #game-end-info {
     font-size: 13px;
   }
 }
-#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #game-end-info .game-end-headline {
+#main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #game-end-info .game-end-headline {
   font-size: 24px;
   margin-bottom: 10px;
 }
 @media (max-width: 520px) {
-  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .card #game-end-info .game-end-headline {
+  #main-container #app-container #gameplay-container #upper-gameplay-container #question-container-outer #question-container-inner .game-card #game-end-info .game-end-headline {
     font-size: 18px;
   }
 }
