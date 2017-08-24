@@ -1,30 +1,26 @@
-<div id="main-bod" ng-controller="IndexController">
+<div ng-controller="IndexController">
   <!-- Fixed Logo & Menu Bar Start -->
-  <div id="top-part">
-    <div class="wpb-top-bar">
-      <div class="mod-contain" id="navver">
-        <div class="row">
-          <!-- Logo -->
-          <div class="wpb-logo-container">
-            <div id="landing-logo"> 
-              <span id="first-word">Cards</span>
-              <span id="second-word"> for</span> 
-              <span id="third-word">Humanity</span> 
-            </div> 
-            <div class="col-md-9 wpb-menu-container">
-              <ul class="wpb-main-menu">
-                <li><a href="/">Home</a></li>
-              </ul>
-            </div>
-          </div>      
-        </div>
+  <div class="navbar-fixed">
+    <nav class="" role="navigation"> 
+      <div class="nav-wrapper">
+        <a id="logo-container" href="#" class="logo-text brand-logo deep-orange-text accent-3">Cards for Humanity</a>
+        <ul class="right hide-on-med-and-down white-text">
+          <li><a href="#" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+          <li><a href="#" class="waves-effect btn hoverable deep-orange accent-3">Donate</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
       </div>
-    </div>
+    <div id="nav-divider" class="divider"></div>      
+    </nav>
   </div>
+
 <!-- Fixed Logo & Menu Bar End -->
 
 <!-- Landing Start -->
-<div class="wpb-teaser parallax-background" id="homer">
+<div class="wpb-teaser center parallax-background" id="homer">
   <div class="background-opacity"></div> 
   <div class="modified-container">
     <div class="row" id="main-text"> 
@@ -46,7 +42,7 @@
               </ul>
             </div>
             <div class="form-actions">
-              <button id="sign-up-btn" type='submit'>Let's Go!</button>
+              <button class="btn-large waves-effect waves-light deep-orange accent-3" type='submit'>Let's Go!</button>
             </div>
           </form>
         </div>
