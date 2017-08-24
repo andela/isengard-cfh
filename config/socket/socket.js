@@ -74,6 +74,22 @@ module.exports = function(io) {
       console.log('Rooms on Disconnect ', io.sockets.manager.rooms);
       exitGame(socket);
     });
+
+    socket.on('chat message', function(msg) {
+      if (allGames[socket.gameID]) {
+        allGames[socket.gameID].sendChat(msg, socket.id);
+      } else {
+        console.log('Received Message from', socket.id, 'but game does not appear to exist!');
+      }
+    });
+
+    socket.on('someone is typing', function(user) {
+      if (allGames[socket.gameID]) {
+         allGames[socket.gameID].sendTyping(user, socket.id);
+       } else {
+         console.log('Received typing from',socket.id, 'but game does not appear to exist!');
+      }
+    });
     socket.on('selectBlackCard', () => {
       allGames[socket.gameID].startNextRound(allGames[socket.gameID]);
     });

@@ -1,6 +1,11 @@
 var async = require('async');
 var localStorage = require('localStorage');
 var _ = require('underscore');
+var firebase = require('firebase');
+var config = require('../firebaseConfig.js');
+firebase.initializeApp(config);
+var db = firebase.database();
+var chatRef = db.ref('chat/');
 var mongoose = require('mongoose');
 var GameModel = mongoose.model('Game');
 var questions = require(__dirname + '/../../app/controllers/questions.js');
@@ -488,6 +493,32 @@ Game.prototype.changeCzar = (self) => {
       // self.stateChoosing(self);
     }
   }, self.timeLimits.stateChangeCzar * 1000);
+};
+
+Game.prototype.sendChat = function(msg, thisPlayer) {
+  const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
+  
+  if (playerIndex !== -1) {
+    const playerName = this.players[playerIndex].username;
+    const chatInfo = {
+      sentBy: playerName,
+      chatMessage: msg,
+      gameId: this.gameID
+    };
+
+    chatRef.push(chatInfo);
+    this.io.sockets.in(this.gameID).emit('chat message', { chat: msg, name: playerName });
+  }
+};
+
+
+Game.prototype.sendTyping = function(user, thisPlayer) {
+  const playerIndex = this._findPlayerIndexBySocket(thisPlayer);
+  if (playerIndex !== -1) {
+    const playerName = this.players[playerIndex].username;
+    const message = playerName + "  is typing";
+    this.io.sockets.in(this.gameID).emit('someone is typing', { user, typing: message });
+  }
 };
 
 module.exports = Game;

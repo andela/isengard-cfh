@@ -1,0 +1,45 @@
+
+<div class="chat-box">
+  <div class="chat-header" ng-click="hideChat()">
+    <span style="color:white">chatName</span>
+  </div>
+  <span ng-show="game.typingPlayer !== game.players[game.playerIndex].username">{{game.isTyping}}</span>
+  <div class="chat-board " ng-hide="isHidden">
+    <ul id="messages">
+      <li ng-repeat="message in game.messages">{{message.name}}: {{message.chat}}</li>
+    </ul>
+  </div>
+  <div class="chat-text-box" ng-hide="isHidden">
+    <form action="">
+      <input type="hidden" id="user" value="{{game.players[game.playerIndex].username}}" />
+     <input style="    width: 100%;" ng-keypress="onKeyPress()" ng-model="msg" id="m" autocomplete="off" /><button ng-click="sendChat()"></button>
+    </form>
+  </div>
+</div>
+
+
+ <div id="chat" class="animated-chat tada" onclick="loadChatbox()">Chat</div>
+
+
+<script>
+  function loadChatbox() {
+    var e = document.getElementById("minim-chat");
+    e.style.display = "block";
+    var e = document.getElementById("maxi-chat");
+    e.style.display = "none";
+    var e = document.getElementById("chatbox");
+    e.style.margin = "0";
+  }
+  function closeChatbox() {
+    var e = document.getElementById("chatbox");
+    e.style.margin = "0 0 -1500px 0";
+  }
+  function minimChatbox() {
+    var e = document.getElementById("minim-chat");
+    e.style.display = "none";
+    var e = document.getElementById("maxi-chat");
+    e.style.display = "block";
+    var e = document.getElementById("chatbox");
+    e.style.margin = "0 0 -460px 0";
+  }
+</script>

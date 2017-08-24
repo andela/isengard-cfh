@@ -6,6 +6,9 @@ angular.module('mean.system')
       gameID: null,
       players: [],
       playerIndex: 0,
+      messages: [],
+      isTyping: '',
+      typingPlayer: '',
       winningCard: -1,
       winningCardPlayer: -1,
       gameWinner: -1,
@@ -216,8 +219,24 @@ angular.module('mean.system')
       socket.emit('pickWinning',{card: card.id});
     };
 
-    decrementTime();
+    socket.on('chat message', function (data) {
+      game.messages.push(data);
+      game.isTyping = "";
+    });
 
+    socket.on('someone is typing', function (data) {
+      game.isTyping = data.typing;
+      game.typingPlayer = data.user;
+    });
+
+    game.sendChat = function (msg) {
+      socket.emit('chat message', msg);
+    };
+
+    game.sendTyping = function (user) {
+      socket.emit('someone is typing', user);
+    };
+    decrementTime();
     game.startNextRound = () => {
       socket.emit('selectBlackCard');
     };

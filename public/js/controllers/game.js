@@ -177,6 +177,11 @@ angular.module('mean.system')
   });
 
     // In case player doesn't pick a card in time, show the table
+  $scope.$watch('game.state', function() {
+    if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
+      $scope.showTable = true;
+    }
+  });
     $scope.$watch('game.state', function() {
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
@@ -222,6 +227,15 @@ angular.module('mean.system')
         }
     }
   });
+
+  if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
+    console.log('joining custom game');
+    game.joinGame('joinGame',$location.search().game);
+  } else if ($location.search().custom) {
+    game.joinGame('joinGame',null,true);
+  } else {
+    game.joinGame();
+  }
 
   $scope.startNextRound = () => {
     if ($scope.isCzar()) {
@@ -269,6 +283,8 @@ angular.module('mean.system')
     $scope.$watch ('game.modal', function() {
       if (game.modal === 'Cannot join game, maximum number of players exceeded') {
         $scope.modalShown = !$scope.modalShown;
+        const invitesModal = $('#invites');
+        invitesModal.modal('open');
       }
     });
 }]);
