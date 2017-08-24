@@ -9,11 +9,7 @@ const Game = mongoose.model('Game');
 const User = mongoose.model('User');
 
 exports.startGame = function (req, res) {
-<<<<<<< HEAD
   const headerBearer = req.headers.authorization || '';
-=======
-  const headerBearer = req.headers.authorization || [];
->>>>>>> specify status code for server response
   const token = headerBearer.split(' ')[1];
   if (token) {
     jwt.verify(token, config.secret, function(err, decoded) {

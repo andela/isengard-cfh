@@ -3,11 +3,7 @@ angular.module('mean.system')
     $scope.global = Global;
 
   $(document).ready(function() {
-<<<<<<< HEAD
   // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-=======
-    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
->>>>>>> fix styling issues
     $('.modal').modal();
     $('.button-collapse').sideNav();
     $('.parallax').parallax();
@@ -60,7 +56,7 @@ angular.module('mean.system')
       $http.post('/api/auth/signup', JSON.stringify($scope.formData))
         .success(function (data) {
           if (data.status === true) {
-            $window.localStorage.setItem('token', JSON.stringify(data.token));
+            $window.localStorage.setItem('token', data.token);
             $window.location.href = '/';
           }
         });
