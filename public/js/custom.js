@@ -1,11 +1,4 @@
-$(document).ready(($) => {
-  $('.modal').modal();
-  $('.button-collapse').sideNav();
-  $('.parallax').parallax();
-  $('select').material_select();
-
-  $('nav').css('background-color', 'transparent');
-  $('#nav-divider').css('background-color', 'rgba(255,187,10,1)');
+$(document).ready(() => {
   $(window).scroll(function () {
     if ($(this).scrollTop() > 400) {
       $('nav').css('background-color', 'rgba(57,10,13,1)').css('transition', '0.3s ease-in-out ');
@@ -23,11 +16,5 @@ $(document).ready(($) => {
       $('nav').css('background-color', 'transparent').css('transition', '0.3s ease-in-out ');
       $('#nav-divider').css('background-color', 'rgba(255,187,10,1)').css('transition', '0.3s ease-in-out ');
     }
-  });
-  $('.button-collapse').sideNav({
-    menuWidth: 315,
-    edge: 'left',
-    closeOnClick: true,
-    draggable: true,
   });
 }); // end of document ready

@@ -1,26 +1,34 @@
 angular.module('mean.system')
-.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
-  $scope.hasPickedCards = false;
-  $scope.winningCardPicked = false;
-  $scope.showTable = false;
-  $scope.modalShown = false;
-  $scope.game = game;
-  $scope.pickedCards = [];
-  var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-  $scope.makeAWishFact = makeAWishFacts.pop();
+.controller('GameController', ['$scope', 'game', '$timeout', '$location', '$http', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, $http, MakeAWishFactsService, $dialog) {
+    $(document).ready(function() {
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+      $('.modal').modal();
+      $('.button-collapse').sideNav();
+      $('.parallax').parallax();
+      $('nav').css('background-color', 'transparent');
+      $('#nav-divider').css('background-color', 'rgba(255,187,10,1)');
+      $('.button-collapse').sideNav({
+        menuWidth: 315,
+        edge: 'left',
+        closeOnClick: true,
+        draggable: true,
+      });
+    });
 
-  $scope.onKeyPress = function(){
-    const user = angular.element('#user').val();
-    game.sendTyping(user);
-  };
-  $scope.sendChat = function(){
-    game.sendChat($scope.msg);
-    $scope.msg = "";
-  };
-
-  $scope.pickCard = function(card) {
-    if (!$scope.hasPickedCards) {
-      if ($scope.pickedCards.indexOf(card.id) < 0) {
+    $scope.hasPickedCards = false;
+    $scope.winningCardPicked = false;
+    $scope.showTable = false;
+    $scope.modalShown = false;
+    $scope.game = game;
+    $scope.pickedCards = [];
+    var makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+    $scope.makeAWishFact = makeAWishFacts.pop();
+    $scope.data = {
+      region: null
+    };
+    $scope.pickCard = function(card) {
+      if (!$scope.hasPickedCards) {
+        if ($scope.pickedCards.indexOf(card.id) < 0) {
           $scope.pickedCards.push(card.id);
           if (game.curQuestion.numAnswers === 1) {
             $scope.sendPickedCards();
@@ -157,6 +165,28 @@ angular.module('mean.system')
       $scope.showTable = true;
     }
   });
+    $scope.$watch('game.state', function() {
+      if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
+        $scope.showTable = true;
+      }
+    });
+    $scope.regionModal = function () {
+      const guestModal = $('#region');
+      guestModal.modal('open');
+    };
+    
+    $scope.selectRegion = function () {
+      if ($scope.data.region === null) {
+        Materialize.toast('No Region Selected!!', 4000, 'red');
+        return;
+      }
+      var region = { region: $scope.data.region };
+      $http.post('/api/region', JSON.stringify(region));
+      const guestModal = $('#region');
+      guestModal.modal('close');
+      $scope.startGame();
+    };
+
 
   $scope.$watch('game.gameID', function() {
     if (game.gameID && game.state === 'awaiting players') {
@@ -190,4 +220,44 @@ angular.module('mean.system')
     game.joinGame();
   }
 
+  $scope.startNextRound = () => {
+    if ($scope.isCzar()) {
+      game.startNextRound();
+    }
+  };
+
+    $scope.shuffleCards = () => {
+    // const target = $('#czarModal');
+    const card = $(`#${event.target.id}`);
+    card.addClass('animated flipOutY');
+    setTimeout(() => {
+      $scope.startNextRound();
+      card.removeClass('animated flipOutY');
+      // target.addClass('none');
+    }, 500);
+  };
+
+  $scope.flipCards = () => {
+    const card = angular.element(document.getElementsByClassName('special-czar-card'));
+    card.addClass('slide');
+    $timeout(() => {
+      $scope.startNextRound();
+      card.addClass('none');
+    }, 4000);
+  };
+
+  if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
+    console.log('joining custom game');
+    game.joinGame('joinGame',$location.search().game);
+  } else if ($location.search().custom) {
+    game.joinGame('joinGame',null,true);
+  } else {
+    game.joinGame();
+  }
+
+    $scope.$watch ('game.modal', function() {
+      if (game.modal === 'Cannot join game, maximum number of players exceeded') {
+        $scope.modalShown = !$scope.modalShown;
+      }
+    });
 }]);

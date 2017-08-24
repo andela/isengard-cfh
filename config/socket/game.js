@@ -1,4 +1,5 @@
 var async = require('async');
+var localStorage = require('localStorage');
 var _ = require('underscore');
 var firebase = require('firebase');
 var config = require('../firebaseConfig.js');
@@ -21,6 +22,9 @@ var guestNames = [
   "The Spleen",
   "Dingle Dangle"
 ];
+var regionSelected = '';
+var regionQuestions = [];
+var regionAnswers = [];
 
 function Game(gameID, io) {
   this.io = io;
@@ -32,7 +36,7 @@ function Game(gameID, io) {
   this.winnerAutopicked = false;
   this.czar = -1; // Index in this.players
   this.playerMinLimit = 3;
-  this.playerMaxLimit = 6;
+  this.playerMaxLimit = 12;
   this.pointLimit = 5;
   this.state = "awaiting players";
   this.round = 0;
@@ -42,7 +46,9 @@ function Game(gameID, io) {
   this.timeLimits = {
     stateChoosing: 21,
     stateJudging: 16,
-    stateResults: 6
+    stateResults: 6,
+    stateNextRound: 12,
+    stateChangeCzar: 1
   };
   // setTimeout ID that triggers the czar judging state
   // Used to automatically run czar judging if players don't pick before time limit
@@ -53,6 +59,14 @@ function Game(gameID, io) {
   // Gets cleared if czar finishes judging before time limit.
   this.judgingTimeout = 0;
   this.resultsTimeout = 0;
+  // setTimeout ID that triggers the next round
+  // Used to automatically run the next question if the czar doesn't decide before the time limit
+  // Gets cleared if czar finishes judging before time limit.
+  this.nextRoundTimeout = 0;
+    // setTimeout ID that triggers the next czar
+  // Used to automatically decide the next czar before the time limit
+  // Gets cleared if czar finishes judging before time limit.
+  this.changeCzarTimeout = 0;
   this.guestNames = guestNames.slice();
 }
 
@@ -112,27 +126,39 @@ Game.prototype.assignGuestNames = function() {
 
 Game.prototype.prepareGame = function() {
   this.state = "game in progress";
-
+  console.log('TERUNGWAS CHECK THIS NEW GAME HAS STARTED');
   this.io.sockets.in(this.gameID).emit('prepareGame',
     {
       playerMinLimit: this.playerMinLimit,
       playerMaxLimit: this.playerMaxLimit,
       pointLimit: this.pointLimit,
-      timeLimits: this.timeLimits
+      timeLimits: this.timeLimits,
+      state: this.state
     });
 
   var self = this;
   async.parallel([
     this.getQuestions,
     this.getAnswers
-    ],
-    function(err, results){
+  ],
+    function (err, results) {
       if (err) {
         console.log(err);
       }
-      self.questions = results[0];
-      self.answers = results[1];
-
+      regionSelected = localStorage.getItem('regionSelected');
+      if (regionSelected) {
+        regionQuestions = results[0].filter(function(result) {
+          return result.region === regionSelected;
+        });
+        regionAnswers = results[1].filter(function(result) {
+          return result.region === regionSelected;
+        });
+        self.questions = regionQuestions;
+        self.answers = regionAnswers;
+      } else {
+        self.questions = results[0];
+        self.answers = results[1];
+      }
       self.startGame();
     });
 };
@@ -141,7 +167,8 @@ Game.prototype.startGame = function() {
   console.log(this.gameID,this.state);
   this.shuffleCards(this.questions);
   this.shuffleCards(this.answers);
-  this.stateChoosing(this);
+  // this.stateChoosing(this);
+  this.changeCzar(this);
 };
 
 Game.prototype.sendUpdate = function() {
@@ -163,12 +190,6 @@ Game.prototype.stateChoosing = function(self) {
   }
   self.round++;
   self.dealAnswers();
-  // Rotate card czar
-  if (self.czar >= self.players.length - 1) {
-    self.czar = 0;
-  } else {
-    self.czar++;
-  }
   self.sendUpdate();
 
   self.choosingTimeout = setTimeout(function() {
@@ -186,7 +207,8 @@ Game.prototype.selectFirst = function() {
     this.stateResults(this);
   } else {
     // console.log(this.gameID,'no cards were picked!');
-    this.stateChoosing(this);
+    // this.stateChoosing(this);
+    // this.startNextRound(this);
   }
 };
 
@@ -194,9 +216,11 @@ Game.prototype.stateJudging = function(self) {
   self.state = "waiting for czar to decide";
   // console.log(self.gameID,self.state);
 
-  if (self.table.length <= 1) {
+  if (self.table.length === 1) {
     // Automatically select a card if only one card was submitted
     self.selectFirst();
+  } else if(self.table.length === 0) {
+    self.changeCzar(self);
   } else {
     self.sendUpdate();
     self.judgingTimeout = setTimeout(function() {
@@ -221,7 +245,8 @@ Game.prototype.stateResults = function(self) {
     if (winner !== -1) {
       self.stateEndGame(winner);
     } else {
-      self.stateChoosing(self);
+      // self.stateChoosing(self);
+      self.changeCzar(self);
     }
   }, self.timeLimits.stateResults*1000);
 };
@@ -377,6 +402,7 @@ Game.prototype.removePlayer = function(thisPlayer) {
         clearTimeout(this.choosingTimeout);
         this.sendNotification('The Czar left the game! Starting a new round.');
         return this.stateChoosing(this);
+        // return this.startNextRound(this);
       } else if (this.state === "waiting for czar to decide") {
         // If players are waiting on a czar to pick, auto pick.
         this.sendNotification('The Czar left the game! First answer submitted wins!');
@@ -427,6 +453,30 @@ Game.prototype.killGame = function() {
   clearTimeout(this.resultsTimeout);
   clearTimeout(this.choosingTimeout);
   clearTimeout(this.judgingTimeout);
+  clearTimeout(this.nextRoundTimeout);
+};
+
+Game.prototype.startNextRound = (self) => {
+  if (self.state === 'pick black card') {
+    self.stateChoosing(self);
+  }
+};
+Game.prototype.changeCzar = (self) => {
+  self.state = 'pick black card';
+  console.log(self.state);
+  self.table = [];
+  if (self.czar >= self.players.length - 1){
+    self.czar = 0;
+  } else {
+    self.czar += 1;
+  }
+  self.sendUpdate();
+  self.changeCzarTimeout = setTimeout(() => {
+    if (self.state !== 'waiting for players to pick') {
+      // self.startNextRound(self);
+      // self.stateChoosing(self);
+    }
+  }, self.timeLimits.stateChangeCzar * 1000);
 };
 
 Game.prototype.sendChat = function(msg, thisPlayer) {

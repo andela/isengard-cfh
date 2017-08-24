@@ -1,15 +1,15 @@
-var async = require('async');
+const async = require('async');
 
-
-module.exports = function(app, passport, auth) {
+module.exports = function (app, passport, auth) {
     // User Routes
-  var users = require('../app/controllers/users');
+  const users = require('../app/controllers/users');
+  const region = require('../app/controllers/region');
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
   app.get('/chooseavatars', users.checkAvatar);
   app.get('/signout', users.signout);
 
-    // Setting up the users api
+   // Setting up the users api
   app.post('/users', users.create);
   app.post('/users/avatars', users.avatars);
 
@@ -22,7 +22,7 @@ module.exports = function(app, passport, auth) {
     failureFlash: 'Invalid email or password.'
   }), users.session);
 
-   // login endpoint
+    // login endpoint
   app.post('/api/auth/signin', users.login);
 
   app.get('/users/me', users.me);
@@ -73,26 +73,43 @@ module.exports = function(app, passport, auth) {
   app.param('userId', users.user);
 
     // Answer Routes
-  var answers = require('../app/controllers/answers');
+  const answers = require('../app/controllers/answers');
   app.get('/answers', answers.all);
   app.get('/answers/:answerId', answers.show);
     // Finish with setting up the answerId param
   app.param('answerId', answers.answer);
 
     // Question Routes
-  var questions = require('../app/controllers/questions');
+  const questions = require('../app/controllers/questions');
   app.get('/questions', questions.all);
   app.get('/questions/:questionId', questions.show);
     // Finish with setting up the questionId param
   app.param('questionId', questions.question);
 
     // Avatar Routes
-  var avatars = require('../app/controllers/avatars');
+  const avatars = require('../app/controllers/avatars');
   app.get('/avatars', avatars.allJSON);
 
     // Home route
-  var index = require('../app/controllers/index');
+  const index = require('../app/controllers/index');
   app.get('/play', index.play);
   app.get('/', index.render);
   app.get('/api/auth/play', index.play);
+  // Route for region
+  app.post('/api/region', region.setRegion);
+
+  // Route for the leaderboard
+  const board = require('../app/controllers/leaderBoard');
+  app.get('/api/auth/leaderboard', board.leaderBoard);
+
+  // Route for Game History
+  var game = require('../app/controllers/gameHistory');
+  app.get('/api/auth/history', game.gameHistory);
+
+  // Route to get donations
+  app.get('/api/auth/donations', users.getDonations);
+  // Game routes
+  var game = require('../app/controllers/game');
+  app.post('/api/games/:id/start', game.startGame);
+  app.post('/api/games/:id/end', game.endGame);
 };

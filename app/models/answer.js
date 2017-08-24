@@ -2,29 +2,34 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    config = require('../../config/config'),
-    Schema = mongoose.Schema;
+  config = require('../../config/config'),
+  Schema = mongoose.Schema;
 
 /**
  * Answer Schema
  */
 var AnswerSchema = new Schema({
-    id: {
-        type: Number
-    },
-    text: {
-        type: String,
-        default: '',
-        trim: true
-    },
-    official: {
-        type: Boolean
-    },
-    expansion: {
-        type: String,
-        default: '',
-        trim: true
-    }
+  id: {
+    type: Number
+  },
+  text: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  region: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  official: {
+    type: Boolean
+  },
+  expansion: {
+    type: String,
+    default: '',
+    trim: true
+  }
 });
 
 /**
