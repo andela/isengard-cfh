@@ -255,7 +255,6 @@ Game.prototype.stateEndGame = function(winner) {
   this.sendUpdate();
   const winnerObject = this.players[winner];
   const winnerId = winnerObject.userID;
-  console.log('WINNERID', winnerId);
   GameModel.update({ id: this.gameID }, {
     $set: {
       winnerId
