@@ -1,16 +1,13 @@
 var async = require('async');
 var localStorage = require('localStorage');
 var _ = require('underscore');
-<<<<<<< HEAD
 var firebase = require('firebase');
 var config = require('../firebaseConfig.js');
 firebase.initializeApp(config);
 var db = firebase.database();
 var chatRef = db.ref('chat/');
-=======
 var mongoose = require('mongoose');
 var GameModel = mongoose.model('Game');
->>>>>>> staging
 var questions = require(__dirname + '/../../app/controllers/questions.js');
 var answers = require(__dirname + '/../../app/controllers/answers.js');
 var guestNames = [
