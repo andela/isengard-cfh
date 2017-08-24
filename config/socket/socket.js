@@ -89,6 +89,7 @@ module.exports = function(io) {
        } else {
          console.log('Received typing from',socket.id, 'but game does not appear to exist!');
       }
+    });
     socket.on('selectBlackCard', () => {
       allGames[socket.gameID].startNextRound(allGames[socket.gameID]);
     });

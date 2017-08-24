@@ -83,6 +83,7 @@ angular.module('mean.directives', [])
     return {
       restrict: 'EA',
       templateUrl: '/views/chat.html',
+    }
   })
   .directive('modalDialog', function() {
     return {
