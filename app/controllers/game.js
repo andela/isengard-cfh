@@ -32,6 +32,7 @@ exports.startGame = function (req, res) {
       });
       newGame.save(function(err) {
         if (err) {
+          console.log(err);
           return res.json({
             status: false,
             message: 'Could not save game'
@@ -59,14 +60,14 @@ exports.startGame = function (req, res) {
               }
             }, function(err) {
               if (err) {
-                return res.json({
+                return res.status(400).json({
                   status: false,
                   message: 'Could not add game to user model'
                 });
               }
             });
           });
-          return res.send({ err, users });
+          return res.send({ game: newGame });
         });
       });
     });
@@ -79,12 +80,12 @@ exports.startGame = function (req, res) {
 };
 
 exports.endGame = function(req, res) {
-  const headerBearer = req.headers.authorization;
+  const headerBearer = req.headers.authorization || [];
   const token = headerBearer.split(' ')[1];
   if (token) {
     jwt.verify(token, config.secret, function(err, decoded) {
       if (err) {
-        return res.json({
+        return res.status(401).json({
           status: false,
           message: 'Token not valid'
         });
@@ -96,13 +97,13 @@ exports.endGame = function(req, res) {
         id: gameId,
       }, function(err, game) {
         if (err || game.length === 0) {
-          return res.json({
+          return res.status(404).json({
             status: false,
             message: 'Game not found'
           });
         }
         if (game[0].creatorId !== userId) {
-          return res.json({
+          return res.status(403).json({
             status: false,
             message: 'Unauthorized. Only game creator can update game'
           });
@@ -113,7 +114,7 @@ exports.endGame = function(req, res) {
           }
         }, function(err) {
           if (err) {
-            return res.json({
+            return res.status(400).json({
               status: false,
               message: 'Could not update game info',
               error: err
@@ -127,7 +128,7 @@ exports.endGame = function(req, res) {
       });
     });
   } else {
-    res.json({
+    res.status(403).json({
       status: false,
       message: 'No token provided'
     });

@@ -66,7 +66,7 @@ angular.module('mean.system')
       $http.post('/api/auth/signup', JSON.stringify($scope.formData))
         .success(function (data) {
           if (data.status === true) {
-            $window.localStorage.setItem('token', JSON.stringify(data.token));
+            $window.localStorage.setItem('token', data.token);
             $window.location.href = '/';
           }
         });
